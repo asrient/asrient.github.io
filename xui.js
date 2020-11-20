@@ -122,9 +122,6 @@ function openLink(link) {
     window.location.href = link
 }
 
-$('document').ready(function () {
-    $('textarea').autoResize();
-})
 
 function escapeHtml(unsafe) {
     return unsafe
