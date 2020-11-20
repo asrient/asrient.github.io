@@ -5,8 +5,8 @@
     <title>ASRIENT</title>
     <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/xui.css" />
-    <script src="/xui.js"></script>
+    <link rel="stylesheet" type="text/css" href="xui.css" />
+    <script src="xui.js"></script>
     <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1.0, user-scalable=0">
     <meta name="description" content="ASRIENT" />
 </head>
@@ -14,7 +14,7 @@
 <body>
     @ASRIENT
 </body>
-<script src="/socket.io.js"></script>
+<script src="socket.io.js"></script>
 <script>
     var api = new window.Api('http://localhost:3465/');
     api.get('test', {}, (scode, res) => {
@@ -63,7 +63,7 @@
         }
     }
 
-    const live = Live();
+    const live = new Live();
 </script>
 
 </html>
