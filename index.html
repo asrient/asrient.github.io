@@ -14,11 +14,56 @@
 <body>
     @ASRIENT
 </body>
+<script src="/socket.io.js"></script>
 <script>
     var api = new window.Api('http://localhost:3465/');
     api.get('test', {}, (scode, res) => {
-        console.log(scode,res)
+        console.log(scode, res)
     })
+
+    class Live {
+        constructor() {
+            this.socket = null;
+            this.isConnected = false;
+            this.connect()
+        }
+        connect = () => {
+            this.socket = null;
+            this.isConnected = false;
+            var hostUrl = 'localhost:3465';
+            this.socket = new io(hostUrl, {
+                path: '/updates'
+            });
+            this.socket.on('connect', this._onOpen);
+            this.socket.on('reconnect', this._onOpen);
+            this.socket.on('disconnect', this._onClose);
+            this.socket.on('connect_error', this._onError);
+            this.socket.on('chat.text', (msg) => {
+                var data = JSON.parse(msg);
+            });
+        }
+        _onOpen = (event) => {
+            console.log('connection LIVE!')
+            this.isConnected = true;
+        }
+        _onClose = (event) => {
+            console.warn('connection DOWN!')
+            state.announceEvent('Disconnected')
+            this.isConnected = false;
+        }
+        _onError = (event) => {
+            console.error('connection error!', event)
+        }
+        send = (type, data) => {
+            if (this.socket && this.isConnected) {
+                this.socket.emit(type, JSON.stringify(data));
+            } else {
+                console.warn('Cant send msg, connection down', type, data);
+            }
+        }
+    }
+
+    const live = Live();
 </script>
 
 </html>
