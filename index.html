@@ -17,11 +17,7 @@
 <script>
     var api = new window.Api('http://localhost:3465/');
     api.get('test', {}, (scode, res) => {
-        if (scode == 201) {
-            console.log('got res', res)
-        } else {
-            alert(res);
-        }
+        console.log(scode,res)
     })
 </script>
 
