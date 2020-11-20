@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>ASRIENT</title>
+    <meta charset="utf-8">
+    <script src="/static/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/xui.css" />
+    <script src="/static/xui.js"></script>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1.0, user-scalable=0">
+    <meta name="description" content="ASRIENT" />
+</head>
+
+<body>
+    @ASRIENT
+</body>
+<script>
+    var api = new window.Api('http://fuf.me:3465/');
+    api.get('test', {}, (scode, res) => {
+        if (scode == 201) {
+            console.log('got res', res)
+        } else {
+            alert(res);
+        }
+    })
+</script>
+
+</html>
