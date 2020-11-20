@@ -30,7 +30,7 @@
         connect = () => {
             this.socket = null;
             this.isConnected = false;
-            var hostUrl = 'localhost:3465';
+            var hostUrl = 'http://localhost:3465';
             this.socket = new io(hostUrl, {
                 path: '/updates'
             });
