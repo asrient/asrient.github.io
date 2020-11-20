@@ -14,7 +14,6 @@
 <body>
     @ASRIENT
 </body>
-<script src="socket.io.js"></script>
 <script>
     var api = new window.Api('http://localhost:3465/');
     api.get('test', {}, (scode, res) => {
@@ -58,19 +57,16 @@
     }
     _onOpen = (event) => {
         console.log('connection LIVE!')
-        state.toast('Connected')
         this.no_retries = 0;
         this.isConnected = true;
     }
     _onClose = (event) => {
         console.warn('connection DOWN!')
-        state.toast('No connection')
         this.isConnected = false;
         this.retry()
     }
     _onError = (event) => {
         console.error('connection error!', event)
-        state.toast('Connection error')
     }
     _onMessage = (event) => {
         var data = JSON.parse(event.data);
