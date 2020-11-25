@@ -4,95 +4,35 @@
 <head>
     <title>ASRIENT</title>
     <meta charset="utf-8">
-    <script src="jquery.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/TweenMax.min.js"></script>
+    <script src="scripts/ScrollMagic.min.js"></script>
+    <script src="scripts/animation.gsap.js"></script>
+    <script src="scripts/debug.addIndicators.js"></script>
     <link rel="stylesheet" type="text/css" href="xui.css" />
     <script src="xui.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/index.css" />
     <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1.0, user-scalable=0">
     <meta name="description" content="ASRIENT" />
 </head>
 
 <body>
-    @ASRIENT
+    <div id="bg">
+        <div id="s1">
+            <div id="trigger1"></div>
+            <div id="s1_card">
+                Hi
+                <div class="size-xl base-light" style="color:#ff7400">I'm Aritra</div>
+            </div>
+        </div>
+        <div id="s2">
+            <div id="s2_title" class="size-xxl base-bold">
+                I design experiences with web technologies
+            </div>
+        </div>
+        <div style="height: 30rem;"></div>
+    </div>
 </body>
-<script>
-    var api = new window.Api('http://localhost:3465/');
-    api.get('test', {}, (scode, res) => {
-        console.log(scode, res)
-    })
-
-    class Live {
-    constructor() {
-        this.socket = null;
-        this.isConnected = false;
-        this.no_retries = 0;
-        this.MAX_RETRIES = 5;
-        this.connect()
-    }
-    connect = () => {
-        this.socket = null;
-        this.no_retries++;
-        this.isConnected = false;
-        var hostUrl = 'ws://localhost:3465/';
-        this.socket = new WebSocket( hostUrl);
-        this.socket.onopen = this._onOpen;
-        this.socket.onclose = this._onClose;
-        this.socket.onerror = this._onError;
-        this.socket.onmessage = this._onMessage;
-    }
-    retry = () => {
-        if (!this.isConnected) {
-            this.socket = null;
-            if (this.no_retries < this.MAX_RETRIES) {
-                this.no_retries++;
-                var timeout = 3000 * (this.no_retries + 1);
-                window.setTimeout(this.connect, timeout);
-            }
-            else {
-                console.warn('MAX Retries reached, No connection!');
-                this.no_retries = 0;
-                state.toast('No internet')
-                window.setTimeout(this.retry, 7 * 60 * 1000); //7 mins
-            }
-        }
-    }
-    _onOpen = (event) => {
-        console.log('connection LIVE!')
-        this.no_retries = 0;
-        this.isConnected = true;
-    }
-    _onClose = (event) => {
-        console.warn('connection DOWN!')
-        this.isConnected = false;
-        this.retry()
-    }
-    _onError = (event) => {
-        console.error('connection error!', event)
-    }
-    _onMessage = (event) => {
-        var data = JSON.parse(event.data);
-        var type = data.type;
-        var user = data.action_user
-        switch (type) {
-            case 'update.members.connected': {
-                //
-                break;
-            }
-            default: {
-                console.debug('live msg', data);
-            }
-        }
-    }
-    send = (type, data) => {
-        var body = JSON.stringify({ ...data, type })
-        if (this.socket && this.isConnected) {
-            this.socket.send(body);
-        }
-        else {
-            console.warn('Cant send msg, connection down', type, data);
-        }
-    }
-}
-const live = new Live();
-</script>
+<script src="scripts/index.js"></script>
 
 </html>
