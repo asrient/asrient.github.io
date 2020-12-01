@@ -37,24 +37,60 @@ body {
     overflow-wrap: anywhere;
 }
 #s3_title{
-    padding: 1rem 1.6rem;
-    margin-right: auto;
-    width: 36rem;
-    max-width: 100vw;
-    color:#4f3300;
+    padding: 1rem 2rem;
+    margin: 0px auto;
+    width: 100%;
+    color:#754978;
     overflow-wrap: anywhere;
+    max-width: 60rem;
 }
 #s1_card {
   font-size: 6rem;
   font-weight: 200;
   color:#ffffff;
 }
-
+#appgrid{
+  display: grid;
+  padding: 2rem 1rem;
+  grid-template-columns: 50% 50%;
+  grid-row-gap: 1.5rem;
+  max-width: 60rem;
+  width: 100%;
+  margin: 0 auto;
+}
+.appcard{
+  margin: 0.4rem auto;
+  width:27rem;
+  max-width: 100%;
+  background-color:#251123;
+  min-height: 25rem;
+  height: 100%;
+  padding: 2rem;
+}
+.appicon{
+  font-size: 6rem;
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+  display: block;
+  margin-left: 0;
+}
+.applink{
+  margin: 0.5rem 1.5rem;
+  color:rgb(187, 68, 202);
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 0px;
+  margin-left: 0;
+  cursor: pointer;
+}
 @media (max-width: 900px) {
 
 }
 @media (max-width: 750px) {
-
+  #appgrid{
+    display: flex;
+    flex-direction: column;
+  }
 }
 @media (max-width: 400px) {
 
