@@ -4,52 +4,52 @@ body {
   overflow-x: hidden;
   max-width: 100vw;
 }
-#s2box{
-    height: 10px;
-    width: 10vw;
-    margin: 2rem auto;
-    background-color: rgb(0, 165, 194);
+#s2box {
+  height: 10px;
+  width: 10vw;
+  margin: 2rem auto;
+  background-color: rgb(0, 165, 194);
 }
 #bg {
   min-height: 100vh;
   background-color: rgb(0, 0, 0);
 }
-#hi{
-    position: relative;
+#hi {
+  position: relative;
 }
-#intro{
-    opacity: 0;
+#intro {
+  opacity: 0;
 }
 #s1 {
   min-height: 100vh;
   overflow-x: hidden;
   max-width: 100vw;
 }
-#s2{
-    height: 92vh;
+#s2 {
+  height: 92vh;
 }
-#s2_title{
-    padding: 1rem 1.3rem;
-    margin-right: auto;
-    width: 36rem;
-    max-width: 100vw;
-    color:#008C97;
-    overflow-wrap: anywhere;
+#s2_title {
+  padding: 1rem 1.3rem;
+  margin-right: auto;
+  width: 36rem;
+  max-width: 100vw;
+  color: #008c97;
+  overflow-wrap: anywhere;
 }
-#s3_title{
-    padding: 1rem 2rem;
-    margin: 0px auto;
-    width: 100%;
-    color:#754978;
-    overflow-wrap: anywhere;
-    max-width: 60rem;
+#s3_title {
+  padding: 1rem 2rem;
+  margin: 0px auto;
+  width: 100%;
+  color: #754978;
+  overflow-wrap: anywhere;
+  max-width: 60rem;
 }
 #s1_card {
   font-size: 6rem;
   font-weight: 200;
-  color:#ffffff;
+  color: #ffffff;
 }
-#appgrid{
+#appgrid {
   display: grid;
   padding: 2rem 1rem;
   grid-template-columns: 50% 50%;
@@ -58,25 +58,25 @@ body {
   width: 100%;
   margin: 0 auto;
 }
-.appcard{
+.appcard {
   margin: 0.4rem auto;
-  width:27rem;
+  width: 27rem;
   max-width: 100%;
-  background-color:#251123;
+  background-color:rgba(37, 17, 35, 0);
   min-height: 25rem;
   height: 100%;
   padding: 2rem;
 }
-.appicon{
+.appicon {
   font-size: 6rem;
   margin-bottom: 1.5rem;
   margin-top: 2rem;
   display: block;
   margin-left: 0;
 }
-.applink{
+.applink {
   margin: 0.5rem 1.5rem;
-  color:rgb(187, 68, 202);
+  color: rgb(187, 68, 202);
   font-size: 1.3rem;
   font-weight: 500;
   margin-bottom: 0px;
@@ -84,15 +84,12 @@ body {
   cursor: pointer;
 }
 @media (max-width: 900px) {
-
 }
 @media (max-width: 750px) {
-  #appgrid{
+  #appgrid {
     display: flex;
     flex-direction: column;
   }
 }
 @media (max-width: 400px) {
-
-
 }
