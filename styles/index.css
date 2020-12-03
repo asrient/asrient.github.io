@@ -98,6 +98,9 @@ body {
   margin-left: 0;
   cursor: pointer;
 }
+.apptxt {
+  color:#bb85a1;
+}
 @media (max-width: 900px) {
 }
 @media (max-width: 750px) {
