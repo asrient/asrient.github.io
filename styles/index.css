@@ -90,16 +90,25 @@ body {
   margin-left: 0;
 }
 .applink {
-  margin: 0.5rem 1.5rem;
+  margin: 0.5rem 1rem;
   color: rgb(187, 68, 202);
   font-size: 1.3rem;
   font-weight: 500;
   margin-bottom: 0px;
   margin-left: 0;
   cursor: pointer;
+  padding: 0.1rem 0.3rem;
+}
+.applink:hover {
+  color: rgb(82, 19, 90);
+  background-color: #bb85a1;
 }
 .apptxt {
   color:#bb85a1;
+}
+.at1{
+  color: #87547f;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 @media (max-width: 900px) {
 }
