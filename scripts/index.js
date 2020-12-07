@@ -46,7 +46,6 @@ $(".appcard").each(function(){
 	var isActive=false;
 	elem.hover( ()=>{
 		//mouse enter
-		console.log("active")
 		isActive=true
 	}, ()=>{
 		elem.css({transform: `perspective(870px) rotateX(0deg) rotateY(0deg) scale3d(1.015, 1.015, 1.015)`})
