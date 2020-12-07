@@ -82,6 +82,11 @@ body {
   min-height: 25rem;
   height: 100%;
   padding: 2rem;
+  transition: all;
+  transition-duration: 0.4s;
+  min-height: initial;
+  will-change: transform;
+  transform: perspective(870px) rotateX(0deg) rotateY(0deg);
 }
 .appicon {
   font-size: 6rem;

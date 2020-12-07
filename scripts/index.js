@@ -40,3 +40,23 @@ var s3_bg_scene = new ScrollMagic.Scene({ triggerElement: "#s2", triggerHook: 0,
 	.setTween(s3_bg_tween)
 	//.addIndicators({ name: "sec1 fade" }) // add indicators (requires plugin)
 	.addTo(controller);
+
+$(".appcard").each(function(){
+	var elem=$(this)
+	var isActive=false;
+	elem.hover( ()=>{
+		//mouse enter
+		console.log("active")
+		isActive=true
+	}, ()=>{
+		elem.css({transform: `perspective(870px) rotateX(0deg) rotateY(0deg) scale3d(1.015, 1.015, 1.015)`})
+		isActive=false
+	} )
+	var midY=elem.outerHeight()/2
+	var midX=elem.outerWidth()/2
+	elem.mousemove((e)=>{
+		var rotX=(-midX-e.offsetX)/(midX/1.5)
+		var rotY=(midY-e.offsetY)/(midY/1.5)
+		elem.css({transform: `perspective(870px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.015, 1.015, 1.015)`})
+	})
+})
