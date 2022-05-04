@@ -1,0 +1,85 @@
+DHCP & DNS Configuration
+
+//Only on the left router
+ip dhcp pool <any name>
+network <network ip> <subnet mask>
+default-router <ip of router>
+dns-server <ip of dns server>
+
+EIGRP Configuration
+
+//On both the routers
+router eigrp 1
+network <gigabit ip> (symbolises any number of gigabit networks in the router)
+network <serial ip> (symbolises the connect serial ports IP)
+
+OSPF Configuration
+
+//On left router
+router ospf 1
+network <gigabit ip> <wildcard mask> area 0
+network <serial ip> <wildcard mask> area 0
+//On right router
+router ospf 2
+network <gigabit ip> <wildcard mask> area 0
+network <serial ip> <wildcard mask> area 0
+
+Standard Number ACL Configuration
+
+//Standard Number ACL
+access-list 2 deny <ip to be blocked> <wildcard mask>
+access-list 2 permit any
+interface se<port number>
+ip access-group 2 out
+
+Extended Number ACL Configuration
+
+//Needs to be configured in R2
+access-list 112 deny tcp
+192.168.10.0 0.0.0.255
+192.168.12.2 0.0.0.0 eq 80
+access-list 112 permit ip any any
+//the first any, allows traffic to student apart from http
+//the second any, is for the faculty network
+interface gi0/0
+access-group 112 out
+
+Static NAT Configuration
+
+//On the right router
+ip nat inside source static <ip of the right pc/server> 1.0.0.1
+interface gig0/0
+ip nat outside
+exit
+interface se0/1/0
+ip nat outside
+
+Dynamic NAT Configuration
+
+//On the left router
+access-list 1 permit <ip of left network> <ip of the left serial port>
+ip nat pool a 50.0.0.1 50.0.0.2 netmask 255.0.0.0
+ip nat inside source list 1 pool a
+interface gig0/0
+ip nat inside
+interface se0/1/0
+ip nat outside
+
+VLAN Configuration
+
+//In both the switches
+vlan 10
+name Student
+vlan 20
+name Faculty
+interface fa0/1
+switchport mode access
+switchport access vlan 10
+interface fa0/2
+switchport mode access
+switchport access vlan 20
+interface fa0/24
+switchport mode trunk
+switchport nonegotiate
+Network Lab Code Templates 5
+Socket Programmin
