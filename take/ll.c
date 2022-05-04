@@ -1,4 +1,4 @@
-// LL(1) parser
+// LL(1) parser with stack
 
 #include<stdio.h>
 #include<ctype.h>
@@ -383,3 +383,5 @@ void followfirst(char c, int c1 , int c2)
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
+
+
