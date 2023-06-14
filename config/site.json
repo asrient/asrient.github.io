@@ -1,0 +1,28 @@
+{
+    "NAME": "Asrient",
+    "BRAND_TEXT": "Asrient.",
+    "REAL_NAME": "Aritra",
+    "GITHUB_USERNAME": "asrient",
+    "SITE_GITHUB_URL": "https://github.com/asrient/asrient.github.io",
+    "INTRO": "Hey, I'm Aritra Sen. <br />Currently working at Oracle as a software engineer. <br />Welcome to my personal website, a cozy corner of the internet where I occasionally post articles, notes and stories as I keep learning new things. <br />I also document some of my exciting open-sourced projects in here that I have been working on in my free time.",
+    "SOCIALS": {
+        "GITHUB": "https://github.com/asrient",
+        "LINKEDIN": "https://www.linkedin.com/in/asrient/",
+        "TWITTER": "https://twitter.com/ooritroo"
+    },
+    "FOOTER_TEXT": "© 2023 Asrient.",
+    "FOOTER_LINKS": [
+        {
+            "NAME": "Archive",
+            "LINK": "/archive/1"
+        },
+        {
+            "NAME": "Blog",
+            "LINK": "/blog"
+        },
+        {
+            "NAME": "Projects",
+            "LINK": "/projects"
+        }
+    ]
+}
