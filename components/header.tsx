@@ -195,6 +195,7 @@ const Header = ({ theme, project, docsConfig }: {
                   theme={theme}
                   isForceExpanded={isOpen}
                 />
+                {/* Test scrollability */}
                 {/* <div style={{height:'1000px'}}></div> */}
               </Suspense>
               <div className="h-16" />
