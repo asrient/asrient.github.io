@@ -25,7 +25,7 @@ const Layout = ({ theme, children, project, docs, currentDoc, lastUpdatedOn }: P
     <>
       <Meta />
       <Header theme={theme} project={project} docsConfig={docs} />
-      <div className={thm`$bg-accent-5 min-h-[80vh]`}>
+      <div className={thm`$bg-accent-5 dark:$bg-accent-5 min-h-[80vh]`}>
       <div className={`relative max-w-screen-xl md:px-4 py-3 md:py-5 mx-auto `+extraClasses}>
         {showSidebar && <div className={'hidden h-full w-full md:block sticky top-0 left-0 right-0 py-0 max-w-[18rem]'}>
           <div className='overflow-y-scroll no-bg-scrollbar w-full h-[100vh] pt-16 scrolling-touch scrolling-gpu'>

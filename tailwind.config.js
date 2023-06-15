@@ -4,15 +4,34 @@ import { readFileSync, readdirSync } from 'fs';
 
 const THEMES_PATH = 'config/themes';
 
-let colors = {};
+const colors = {};
+
+// temporary hack for dark mode
+const explicitSafeList = [];
+
+// ADD HERE MANUALLY ALL THE DARK MODE ACCENT COLORS USED
+const DARK_MODE_ENABLE = [
+  'bg-accent-5',
+  'bg-accent-4',
+  'border-accent-2',
+  'border-accent-3',
+  'text-accent-2',
+  'border-accent-4'
+]
 
 function importTheme(themeData, themeName) {
   // import colors from theme
-  Object.keys(themeData.colors).forEach((color) => {
-    colors[`${color}-${themeName}`] = themeData.colors[color];
+  Object.keys(themeData?.light || []).forEach((color) => {
+    colors[`${color}-${themeName}`] = themeData.light[color];
   });
-}
+  Object.keys(themeData?.dark || []).forEach((color) => {
+    colors[`${color}-${themeName}-dark`] = themeData.dark[color];
+  });
 
+  DARK_MODE_ENABLE.forEach((item) => {
+    explicitSafeList.push(`dark:${item}-${themeName}-dark`);
+  })
+}
 
 readdirSync(THEMES_PATH).map((filename) => {
   const themePath = `${THEMES_PATH}/${filename}`;
@@ -23,6 +42,7 @@ readdirSync(THEMES_PATH).map((filename) => {
 
 module.exports = {
   content: ['./components/**/*.tsx', './pages/**/*.tsx'],
+  darkMode: 'media', // 'class'
   theme: {
     extend: {
       colors: {
@@ -55,6 +75,7 @@ module.exports = {
   safelist: [
     {
       pattern: /.*-accent-.*/,
-    }
+    },
+    ...explicitSafeList
   ]
 }

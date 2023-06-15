@@ -81,7 +81,7 @@ function Selectable({
 
     let cls = '';
     if (isSelected) {
-        cls += thm`rounded $bg-accent-4 border-l-4 $border-accent-2 border-solid`;
+        cls += thm`rounded $bg-accent-4 dark:$bg-accent-4 border-l-4 $border-accent-2 border-solid`;
     }
     return (
         <div className={cls}>
@@ -111,7 +111,7 @@ export function SidebarRouteTree({
                         {index !== 0 && (
                             <li
                                 role="separator"
-                                className="mt-4 mb-2 ml-5 border-b border-border dark:border-border-dark"
+                                className="mt-4 mb-2 ml-5 border-b border-border dark:border-neutral-700"
                             />
                         )}
                         <Selectable isSelected={selected} theme={theme}>
@@ -186,7 +186,7 @@ export function SidebarRouteTree({
     if (level === 0) {
         return (
             <>
-                <div className='text-2xl font-bold text-black px-4 pb-3'>Documentation</div>
+                <div className='text-2xl font-bold text-black dark:text-white px-4 pb-3'>Documentation</div>
                 {body}
             </>
         );

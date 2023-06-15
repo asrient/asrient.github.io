@@ -18,6 +18,10 @@
         }
     }
 
+    body {
+        transition: color 0.2s ease-out 0s, background 0.2s ease-out 0s;
+    }
+
     /* Start purging... */
     /* Force GPU Accelerated scrolling, credit: Twitter Lite */
     .scrolling-gpu {
@@ -81,10 +85,13 @@
 }
 
 @layer components {
+    hr{
+        @apply dark:border-neutral-700;
+    }
     .h2 {
         @apply pl-2 pb-7 md:pb-8 text-3xl md:text-5xl font-bold tracking-tighter leading-tight;
     }
     .buttonPrimaryRound {
-        @apply block text-slate-600 max-w-max px-5 py-3 rounded-full border-gray-600 border-2 border-solid hover:bg-slate-600 hover:text-white;
+        @apply block text-slate-600 dark:text-slate-300 max-w-max px-5 py-3 rounded-full border-gray-600 dark:border-gray-300 border-2 border-solid hover:bg-slate-600 dark:hover:bg-slate-300 hover:text-white dark:hover:text-black;
     }
 }

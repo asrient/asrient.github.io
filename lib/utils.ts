@@ -9,24 +9,17 @@ export function toTitleCase(str: string) {
 
 export function themed(theme: string) {
     return (strs: TemplateStringsArray) => {
-        const str = strs[0];
-        let isVar = false;
-        let newStr = '';
-        for (let i = 0; i < str.length; i++) {
-            if (str[i] === '$') {
-                isVar = true;
-            } else if (str[i] === ' ' &&  isVar) {
-                isVar = false;
-                newStr += `-${theme} `
+        return strs[0].split(' ').map(s => {
+            let parts = s.split('$');
+            if (parts.length === 1) {
+                return s;
             }
-            else {
-                newStr += str[i]
+            parts.push(`-${theme}`);
+            if (parts[0].startsWith('dark:')) {
+                parts.push('-dark');
             }
-        }
-        if (isVar) {
-            newStr += `-${theme}`
-        }
-        return newStr;
+            return parts.join('');
+        }).join(' ');
     }
 }
 

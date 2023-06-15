@@ -23,7 +23,7 @@ const Footer = ({ theme, project, currentDoc, lastUpdatedOn }: {
   }, []);
 
   return (
-    <footer className={thm`$bg-accent-5 border-t border-neutral-200 pt-12 pb-4`}>
+    <footer className={thm`$bg-accent-5 dark:$bg-accent-5 border-t border-neutral-200 dark:border-neutral-700 pt-12 pb-4`}>
       <Container className='max-w-5xl'>
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
           <h3 className="text-3xl font-bold tracking-tighter leading-tight text-center lg:text-left mt-5 lg:mt-0 lg:mb-0 lg:pr-4 lg:w-1/2">

@@ -16,7 +16,7 @@ const Intro = ({ theme }: {
           src="/assets/icon/dp.jpeg"
           width={100}
           height={100}
-          className='mr-4 border-2 border-gray-200 rounded-full'
+          className='mr-4 border-2 border-gray-200 dark:border-gray-800 rounded-full'
           alt="Profile Picture"
         />
         <div className='h-max'>
@@ -32,7 +32,7 @@ const Intro = ({ theme }: {
         <span dangerouslySetInnerHTML={{ __html: INTRO }}></span>
         <div className='pt-4 leading-relaxed'>
           Also find me on:
-          <div className={thm`flex flex-row $text-accent-3 font-semibold`}>
+          <div className={thm`flex flex-row $text-accent-3 dark:$text-accent-2 font-semibold`}>
             {
               Object.keys(SOCIALS).map((social) => {
                 return (

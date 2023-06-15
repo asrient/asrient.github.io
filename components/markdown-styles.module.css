@@ -1,9 +1,9 @@
 .markdown {
-  @apply text-base md:text-lg leading-relaxed;
+  @apply text-sm md:text-base leading-relaxed;
 }
 
 .markdown p {
-  @apply mb-4 leading-7 whitespace-pre-wrap text-gray-700;
+  @apply mb-4 leading-7 whitespace-pre-wrap text-gray-700 dark:text-gray-200;
 }
 
 .markdown ol {
@@ -39,7 +39,7 @@
 }
 
 .markdown pre {
-  @apply p-5 rounded-2xl shadow-2xl my-8;
+  @apply p-5 rounded-2xl shadow-2xl dark:shadow-none my-8;
 }
 
 .markdown li {

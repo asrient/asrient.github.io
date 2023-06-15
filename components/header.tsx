@@ -137,7 +137,7 @@ const Header = ({ theme, project, docsConfig }: {
   return (
     <>
       <div ref={scrollDetectorRef} />
-      <div className={thm`flex p-2 pl-5 pr-5 text-sm justify-center border-solid border-b $bg-accent-5 top-0 z-20` + (showDocsSidebar ? ' sticky' : '')}>
+      <div className={thm`flex p-2 pl-5 pr-5 text-sm justify-center border-solid border-b dark:border-neutral-700 $bg-accent-5 dark:$bg-accent-5 top-0 z-20` + (showDocsSidebar ? ' sticky' : '')}>
         <div className='max-w-7xl flex flex-row w-full justify-between'>
           <div className="leading-tight font-semibold flex items-center">
             {showDocsSidebar && <button
@@ -167,7 +167,7 @@ const Header = ({ theme, project, docsConfig }: {
               <Link href={`/${project.name.toLowerCase()}`} className='ml-2'>{project.name}</Link>
             </>)}
           </div>
-          <div className="leading-tight text-gray-600 mt-auto mb-auto flex flex-row items-center">
+          <div className="leading-tight text-gray-700 dark:text-gray-300 mt-auto mb-auto flex flex-row items-center">
             <Links links={links} />
           </div>
         </div>
@@ -175,7 +175,7 @@ const Header = ({ theme, project, docsConfig }: {
       {showDocsSidebar && isOpen && (
         <div
           ref={scrollParentRef}
-          className={thm`overflow-y-scroll isolate no-bg-scrollbar w-full h-screen fixed top-0 left-0 $bg-accent-5 z-10`}>
+          className={thm`overflow-y-scroll isolate no-bg-scrollbar w-full h-screen fixed top-0 left-0 $bg-accent-5 dark:$bg-accent-5 z-10`}>
           <aside
             className={cn(
               `lg:grow lg:flex flex-col w-full pb-8 pt-20`,

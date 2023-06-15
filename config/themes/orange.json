@@ -1,9 +1,16 @@
 {
-    "colors": {
+    "light": {
         "accent-5": "#FFFCF3",
         "accent-4": "#FFF6EA",
         "accent-3": "#CB4B03",
         "accent-2": "#F5D5B7",
         "accent-1": "#DD8500"
+    },
+    "dark": {
+        "accent-1": "#b48028",
+        "accent-2": "#a66f38",
+        "accent-3": "#674a2c",
+        "accent-4": "#312b25",
+        "accent-5": "#24221f"
     }
 }
