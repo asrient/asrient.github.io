@@ -42,7 +42,7 @@ readdirSync(THEMES_PATH).map((filename) => {
 
 module.exports = {
   content: ['./components/**/*.tsx', './pages/**/*.tsx'],
-  darkMode: 'media', // 'class'
+  darkMode: ['class'],
   theme: {
     extend: {
       colors: {

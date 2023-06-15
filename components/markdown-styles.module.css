@@ -3,7 +3,13 @@
 }
 
 .markdown p {
-  @apply mb-4 leading-7 whitespace-pre-wrap text-gray-700 dark:text-gray-200;
+  @apply mb-4 leading-7 whitespace-pre-wrap text-gray-700;
+}
+
+/* https://github.com/tailwindlabs/tailwindcss/issues/3258 */
+
+:global(.dark) .markdown p {
+  @apply text-gray-200;
 }
 
 .markdown ol {
@@ -39,7 +45,11 @@
 }
 
 .markdown pre {
-  @apply p-5 rounded-2xl shadow-2xl dark:shadow-none my-8;
+  @apply p-5 rounded-2xl shadow-2xl my-8;
+}
+
+:global(.dark) .markdown pre {
+  @apply shadow-none;
 }
 
 .markdown li {

@@ -60,7 +60,7 @@ export function SidebarLink({
         {
           'text-sm pl-6': level > 0,
           'pl-5': level < 2,
-          'pl-9 font-light text-gray-600': level === 2,
+          'pl-9 font-light text-gray-600 dark:text-gray-400': level === 2,
           'text-base font-bold': level === 0,
           'text-primary dark:text-primary-dark': level === 0 && !selected,
           'text-base text-secondary dark:text-secondary-dark':
