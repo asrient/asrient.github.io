@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+    @font-face {
+        font-family: 'Source Code Pro';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('/fonts/Source-Code-Pro-Regular.woff2') format('woff2');
+    }
+
     @media screen and (max-width: 1023px) {
         body {
             overflow-x: hidden;

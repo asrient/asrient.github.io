@@ -1,6 +1,8 @@
 import { AppProps } from 'next/app'
 import Layout from '../components/layout'
 import '../styles/index.css'
+import "../styles/prism-monokai.css";
+import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   pageProps.theme = pageProps.theme || 'orange';

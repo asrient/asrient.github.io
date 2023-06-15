@@ -23,7 +23,7 @@ const ProjectCard = ({
   const thm = themed(accentColor);
 
   return (
-    <Link href={link} className={thm`p-5 md:p-6 $bg-accent-4 rounded-3xl h-48 w-full flex flex-col justify-end`}>
+    <Link href={link} className={thm`p-5 md:p-6 $bg-accent-4 rounded-3xl h-48 w-full flex flex-col justify-end hover:shadow-md transition-shadow duration-500`}>
       <div className="pb-1">
         <Image src={iconPath} height={50} width={50} alt={name+' project icon'} />
       </div>
