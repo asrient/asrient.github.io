@@ -32,7 +32,7 @@ const Layout = ({ theme, children, project, docs, currentDoc, lastUpdatedOn }: P
           <SidebarRouteTree theme={theme} routeTree={docs} level={0} isForceExpanded={false} />
           </div>
           </div>}
-        <main>{children}</main>
+        <main style={{overflowX: 'hidden'}}>{children}</main>
       </div>
       </div>
       <Footer theme={theme} project={project} currentDoc={currentDoc} lastUpdatedOn={lastUpdatedOn} />

@@ -10,7 +10,6 @@ const PostBody = ({ content }: Props) => {
       <div
         className={markdownStyles['markdown']}
         dangerouslySetInnerHTML={{ __html: content }}
-        style={{overflowX: 'hidden'}}
       />
     </div>
   )
