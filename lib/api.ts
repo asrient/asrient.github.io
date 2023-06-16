@@ -6,7 +6,12 @@ import { NAME } from './constants'
 const postsDirectory = join(process.cwd(), '_posts')
 
 export function getPostSlugs(): string[] {
-  return JSON.parse(fs.readFileSync(`${postsDirectory}/slugs.json`, 'utf8'));
+  try {
+    return JSON.parse(fs.readFileSync(`${postsDirectory}/slugs.json`, 'utf8'));
+  } catch (e) {
+    console.warn('WARN: No slugs.json file found. Returning empty array.');
+    return [];
+  }
 }
 
 export function getPostBySlug(slug: string, fields: string[] = []) {
