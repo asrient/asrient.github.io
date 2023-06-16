@@ -4,7 +4,7 @@
     "REAL_NAME": "Aritra",
     "GITHUB_USERNAME": "asrient",
     "SITE_GITHUB_URL": "https://github.com/asrient/asrient.github.io",
-    "INTRO": "Hey, I'm Aritra Sen. <br />Currently working at Oracle as a software engineer. <br />Welcome to my personal website, my corner of the internet where I occasionally post articles, notes and stories as I keep learning new things. <br />I also document some of my exciting open-sourced projects in here that I have been working on in my free time.",
+    "INTRO": "Hey 👋, I'm Aritra Sen. <br />Currently working at Oracle as a software engineer. <br />Welcome to my personal website, my corner of the internet where I occasionally post articles, notes and stories as I keep learning new things. <br />I also document some of my exciting open-sourced projects in here that I have been working on in my free time.",
     "SOCIALS": {
         "GITHUB": "https://github.com/asrient",
         "LINKEDIN": "https://www.linkedin.com/in/asrient/",
@@ -24,5 +24,10 @@
             "NAME": "Projects",
             "LINK": "/projects"
         }
-    ]
+    ],
+    "NOTION": {
+        "ENABLED": true,
+        "AUTHOR_DP": "/assets/blog/authors/asrient.jpeg",
+        "DATABASE_ID": "9083738af0d04455ba4696bbc3847ce2"
+    }
 }

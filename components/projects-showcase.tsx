@@ -19,7 +19,7 @@ const ProjectShowcase = ({ projects, theme }: Props) => {
       <h2 className='h2'>
         Projects
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-3 gap-y-3 md:gap-y-0">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:gap-x-3 gap-y-3 md:gap-y-0">
         {projects.map((project) => (
           <ProjectCard
             key={project.name}

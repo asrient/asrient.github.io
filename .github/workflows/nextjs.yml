@@ -76,6 +76,8 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build and Export with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} npm run export
+        env: # make notion secret key available in the env
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
