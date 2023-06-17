@@ -76,7 +76,7 @@ jobs:
       - name: Env log
         env: # make notion secret key available in the env
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-        run: ${{ steps.detect-package-manager.outputs.runner }} echo NOTION_TOKEN=$NOTION_TOKEN && env
+        run: echo NOTION_TOKEN=$NOTION_TOKEN && env
       - name: Build and Export with Next.js
         env: # make notion secret key available in the env
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
