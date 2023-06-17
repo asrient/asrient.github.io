@@ -19,8 +19,8 @@ const CoverImage = ({ title, src, slug, full }: Props) => {
         'h-[25rem] lg:h-[630px]': !!full,
         'h-[15rem] lg:h-[300px]': !full,
       })}
-      width={full ? 1300 : 550}
-      height={full ? 630 : 300}
+      width="0"
+      height="0"
       style={{ objectFit: 'cover' }}
     />
   )
