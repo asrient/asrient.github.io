@@ -8,12 +8,6 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-  workflow_call:
-    # https://dev.to/n3wt0n/composite-actions-vs-reusable-workflows-what-is-the-difference-github-actions-11kd
-    secrets:
-      NOTION_TOKEN:
-        required: true
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -79,6 +73,10 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Env log
+        env: # make notion secret key available in the env
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        run: ${{ steps.detect-package-manager.outputs.runner }} echo NOTION_TOKEN=$NOTION_TOKEN && env
       - name: Build and Export with Next.js
         env: # make notion secret key available in the env
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
