@@ -3,12 +3,15 @@ import { Client } from "@notionhq/client";
 import fs from "fs";
 import SETTINGS from '../config/site.json' assert { type: "json" };
 import 'dotenv/config'
+import crypto from 'crypto';
 
 const notion = new Client({ auth: process.env.NOTION_TOKEN || '' });
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
 const POSTS_DIR = './_posts';
+const IMAGES_DIR = './public/assets/blog/images';
+const IMG_BASE_PATH = '/assets/blog/images';
 
 const NOTION_SETTINGS = SETTINGS.NOTION || {};
 
@@ -41,13 +44,45 @@ ogImage:
 `;
 }
 
+function sha1(data) {
+    return crypto.createHash('sha1').update(data).digest('hex')
+}
+
+async function downloadImage(url) {
+    const res = await fetch(url);
+    if (!res.ok) {
+        console.error(`Failed to fetch ${url}, status: ${res.status}`);
+        return url;
+    }
+    const filename = sha1(url).slice(0, 5) + '-' + url.split('/').pop().split('?')[0].split('#')[0];
+    const filepath = `${IMAGES_DIR}/${filename}`;
+    const buffer = Buffer.from(await res.arrayBuffer());
+    fs.writeFileSync(filepath, buffer);
+    console.log(`[Downloaded image -> ${url} -> ${filepath}]`);
+    return `${IMG_BASE_PATH}/${filename}`;
+}
+
+async function fixMdLinks(md) {
+    // replace image links that does not start with downloaded image links
+    const promises = [];
+    const reg = /\!\[(.*?)\]\((.*?)\)/g;
+    md.replace(reg, (match, p1, p2) => {
+        promises.push(downloadImage(p2));
+        return match;
+    });
+    promises.reverse();
+    const files = await Promise.all(promises);
+    return md.replace(reg, (match, p1, p2) => `![${p1}](${files.pop()})`);
+}
+
 async function savePage(page) {
     const mdblocks = await n2m.pageToMarkdown(page.notionId);
     const mdString = n2m.toMarkdownString(mdblocks);
     const meta = pageMetadataToFontMatter(page);
     //console.log('content', mdString);
+    const md = await fixMdLinks(mdString.parent);
     console.log(`[Saving page -> ${page.title} -> ${page.id}]`);
-    fs.writeFileSync(`${POSTS_DIR}/${page.id}.md`, meta + '\n' + mdString.parent);
+    fs.writeFileSync(`${POSTS_DIR}/${page.id}.md`, meta + '\n' + md);
 }
 
 async function getPagesFromDatabase(databaseId) {
@@ -64,7 +99,7 @@ async function getPagesFromDatabase(databaseId) {
                 }
             }
         });
-        response.results.forEach((page) => {
+        await Promise.all(response.results.map(async (page) => {
             //console.log('PAGE',page)
             const pageId = page.id.replace(/-/g, '');
             try {
@@ -77,13 +112,15 @@ async function getPagesFromDatabase(databaseId) {
                     tags: page.properties.Tags.multi_select.map((tag) => tag.name),
                     cover: page.cover?.external?.url,
                 }
+                if (!!page_.cover)
+                    page_.cover = await downloadImage(page_.cover);
                 page_.slug = stringToSlug(page_.title + '-' + page_.id);
                 pages.push(page_);
             }
             catch (e) {
                 console.error('Error while parsing page', page.id, e);
             }
-        });
+        }));
         cursor = response.next_cursor;
         if (!cursor) {
             break;
@@ -103,20 +140,24 @@ function cleanup() {
         fs.unlinkSync(`${POSTS_DIR}/${file}`);
     });
     console.log(`Deleted ${files.length} files.`);
+    if (fs.existsSync(IMAGES_DIR)) {
+        fs.rmSync(IMAGES_DIR, { recursive: true });
+    }
+    fs.mkdirSync(IMAGES_DIR);
 }
 
 export default () => {
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
         if (NOTION_SETTINGS.ENABLED !== true) {
             console.log('[Notion is disabled]');
             resolve();
             return;
         }
-        if(!process.env.NOTION_TOKEN) {
+        if (!process.env.NOTION_TOKEN) {
             reject('[Notion is enabled but `NOTION_TOKEN` token is not set in the env.]');
             return;
         }
-        if(!NOTION_SETTINGS.DATABASE_ID) {
+        if (!NOTION_SETTINGS.DATABASE_ID) {
             reject('Notion is enabled but database id is not set.');
             return;
         }
