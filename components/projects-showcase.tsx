@@ -15,7 +15,7 @@ const ProjectShowcase = ({ projects, theme }: Props) => {
 
   return (
     <section className='pt-10 pb-20 mx-auto max-w-5xl'>
-      <div className={thm`p-2 py-7 md:pb-8 md:px-6 rounded-2xl border-dashed $border-accent-2 dark:$border-accent-3 border-2 $bg-accent-4 dark:$bg-accent-4`}>
+      <div className={thm`p-2 py-7 md:pb-8 md:px-6 rounded-2xl $bg-accent-4 dark:$bg-accent-4`}>
       <h2 className='h2'>
         Projects
       </h2>

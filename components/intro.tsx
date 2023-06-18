@@ -20,7 +20,7 @@ const Intro = ({ theme }: {
           alt="Profile Picture"
         />
         <div className='h-max'>
-          <div className='text-3xl md:text-4xl lg:text-6xl font-light leading-normal'>
+          <div className='text-3xl md:text-4xl lg:text-6xl font-medium font-serif leading-normal'>
             {BRAND_NAME}
           </div>
           <div className='italic text-red-500 font-light'>
@@ -28,7 +28,7 @@ const Intro = ({ theme }: {
           </div>
         </div>
       </div>
-      <h4 className="text-left text-sm mt-5 md:pl-8 lg:pl-10 md:max-w-[50vw]">
+      <h4 className="text-left text-lg mt-5 md:pl-8 lg:pl-10 md:max-w-[50vw] font-serif">
         <span dangerouslySetInnerHTML={{ __html: INTRO }}></span>
         <div className='pt-4 leading-relaxed'>
           Also find me on:
