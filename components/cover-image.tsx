@@ -6,7 +6,7 @@ type Props = {
   title: string
   src: string
   slug?: string
-  full?: boolean
+  full: boolean
 }
 
 const CoverImage = ({ title, src, slug, full }: Props) => {
