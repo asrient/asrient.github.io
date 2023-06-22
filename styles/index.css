@@ -94,4 +94,7 @@
     .buttonPrimaryRound {
         @apply block text-slate-600 dark:text-slate-300 max-w-max px-5 py-3 rounded-full border-gray-600 dark:border-gray-300 border-2 border-solid hover:bg-slate-600 dark:hover:bg-slate-300 hover:text-white dark:hover:text-black;
     }
+    .border-lite {
+        @apply border-solid border border-[#5e5e5e2e] dark:border-[#8989892e]
+    }
 }

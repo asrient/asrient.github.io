@@ -139,7 +139,7 @@ const Header = ({ theme, project, docsConfig }: {
     <>
       <div ref={scrollDetectorRef} />
       <div className={thm`flex p-2 pl-5 pr-5 text-sm justify-center $bg-accent-5 dark:$bg-accent-5 top-0 z-20` + (showDocsSidebar ? ' sticky' : '')}>
-        <div className='max-w-7xl flex flex-row w-full justify-between'>
+        <div className='max-w-6xl flex flex-row w-full justify-between'>
           <div className="leading-tight font-semibold flex items-center">
             {showDocsSidebar && <button
               type="button"

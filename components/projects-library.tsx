@@ -10,7 +10,7 @@ type Props = {
 
 const ProjectCardBig = ({ name, iconPath, tagline, description, link, accentColor }: ProjectConfigType) => {
   return (
-    <div className="w-full flex flex-col justify-end py-12 px-7 md:px-12 bg-accent-4-orange dark:bg-accent-4-orange-dark h-full min-h-[30rem]">
+    <div className="w-full flex flex-col justify-end py-12 px-7 md:px-12 bg-accent-4-orange dark:bg-accent-4-orange-dark h-full min-h-[30rem] border-lite">
       <div className="pb-2">
         <Image src={iconPath} height={100} width={100} alt={name + ' project icon'} />
       </div>
