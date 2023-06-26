@@ -6,8 +6,10 @@ window.updateMode = function (mode = null) {
     }
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');
+        document.documentElement.style.backgroundColor = "#232323"
     } else {
         document.documentElement.classList.remove('dark');
+        document.documentElement.style.backgroundColor = "#eeeeee"
     }    
 }
 

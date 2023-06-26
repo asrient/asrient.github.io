@@ -19,9 +19,9 @@ const DocsGrid = ({ routes, theme, title }: Props) => {
       <h2 className='h2'>
         {title || 'Read Next'}
       </h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-2 md:gap-x-3 md:gap-y-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-2 lg:gap-x-3 lg:gap-y-3">
         {routes.map((route) => (
-          <Link href={route.path} key={route.path} className={thm`text-base font-medium text-gray-500 dark:text-gray-300 px-4 py-6 md:px-8 md:py-6 hover:bg-white dark:hover:bg-neutral-800 hover:border-transparent rounded-xl $border-accent-4 dark:$border-accent-4 border-2 border-solid`} >
+          <Link href={route.path} key={route.path} className={thm`text-base font-light text-gray-600 dark:text-gray-400 px-6 py-8 md:px-8 md:py-10 bg-white dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700 hover:border-transparent rounded-xl border-neutral-200 dark:border-neutral-900 border border-solid`} >
             {route.title}
             </Link>
         ))}

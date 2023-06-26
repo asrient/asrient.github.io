@@ -23,19 +23,21 @@ const Footer = ({ theme, project, currentDoc, lastUpdatedOn }: {
   }, []);
 
   return (
-    <footer className={thm`$bg-accent-5 dark:$bg-accent-5 border-t border-neutral-300 dark:border-neutral-700 pt-12 pb-4`}>
+    <footer className={thm`$bg-accent-5 dark:$bg-accent-5 border-t border-neutral-500 border-opacity-20 dark:border-neutral-700 pt-12 pb-4`}>
       <Container className='max-w-5xl'>
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
           <h3 className="text-3xl font-bold tracking-tighter leading-tight text-center lg:text-left mt-5 lg:mt-0 lg:mb-0 lg:pr-4 lg:w-1/2">
             <div className='flex flex-row justify-center items-center md:justify-start'>
-              <Image
-                src={project?.iconPath || "/assets/icon/logo.svg"}
-                width={40}
-                height={40}
-                className='inline-block mr-3'
-                alt="Logo - Rainbow"
-              />
-              <span>{project?.name || BRAND_NAME}</span>
+              <Link href="/">
+                <Image
+                  src={project?.iconPath || "/assets/icon/logo.svg"}
+                  width={40}
+                  height={40}
+                  className='inline-block mr-3'
+                  alt="Logo - Rainbow"
+                />
+                <span>{project?.name || BRAND_NAME}</span>
+              </Link>
             </div>
           </h3>
           <div className="flex justify-center items-center lg:justify-end lg:w-1/2 text-sm font-light">
@@ -52,17 +54,17 @@ const Footer = ({ theme, project, currentDoc, lastUpdatedOn }: {
             }
           </div>
         </div>
-          <div className="flex flex-col lg:flex-row justify-center lg:justify-between text-center items-center text-sm font-light text-gray-500 pt-4">
-            <div>
+        <div className="flex flex-col lg:flex-row justify-center lg:justify-between text-center items-center text-sm font-light text-gray-500 pt-4">
+          <div>
             <span>{FOOTER_TEXT}</span>
             <span>&nbsp;Last updated on {date}</span>
-            </div>
-            <div className='flex flex-row mt-2 lg:mt-0'>
-              {
+          </div>
+          <div className='flex flex-row mt-2 lg:mt-0'>
+            {
               FOOTER_LINKS.map((link, index) => (
-                <Link className={`underline text-blue-800 ${index!==0 ? 'ml-3': ''}`} href={link.LINK} key={link.LINK+link.NAME}>{link.NAME}</Link>))
-              }
-            </div>
+                <Link className={`underline text-blue-800 ${index !== 0 ? 'ml-3' : ''}`} href={link.LINK} key={link.LINK + link.NAME}>{link.NAME}</Link>))
+            }
+          </div>
         </div>
       </Container>
     </footer>
