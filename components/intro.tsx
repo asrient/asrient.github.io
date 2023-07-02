@@ -28,7 +28,7 @@ const Intro = ({ theme }: {
           </div>
         </div>
       </div>
-      <h4 className="text-left text-lg mt-5 md:pl-8 lg:pl-10 md:max-w-[50vw] font-serif">
+      <h4 className="text-left text-lg mt-5 md:pl-8 lg:pl-10 md:max-w-[50vw] font-serif text-2">
         <span dangerouslySetInnerHTML={{ __html: INTRO }}></span>
         <div className='pt-4 leading-relaxed'>
           Also find me on:

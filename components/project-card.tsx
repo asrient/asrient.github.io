@@ -30,7 +30,7 @@ const ProjectCard = ({
       <h3 className="text-xl mb-1 leading-snug font-bold">
         {name}
       </h3>
-      <p className="text-sm leading-relaxed">{tagline}</p>
+      <p className="text-sm leading-relaxed text-2">{tagline}</p>
     </Link>
   )
 }

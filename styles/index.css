@@ -97,4 +97,10 @@
     .border-lite {
         @apply border-solid border border-[#5e5e5e2e] dark:border-[#8989892e]
     }
+    .text-2 {
+        @apply text-neutral-700 dark:text-neutral-300;
+    }
+    .text-3 {
+        @apply text-neutral-600 dark:text-neutral-400;
+    }
 }

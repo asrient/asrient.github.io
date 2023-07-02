@@ -14,12 +14,12 @@ const ProjectCardBig = ({ name, iconPath, tagline, description, link, accentColo
       <div className="pb-2">
         <Image src={iconPath} height={100} width={100} alt={name + ' project icon'} />
       </div>
-      <div className="text-sm text-gray-600 dark:text-gray-300">
+      <div className="text-sm text-2">
         <div className="text-3xl font-medium text-black dark:text-white">{name}</div>
         {tagline}
       </div>
       <br />
-      <div className="text-base">
+      <div className="text-base text-2">
         {description}
       </div>
       <div className='flex pt-4'>
