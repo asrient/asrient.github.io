@@ -7,10 +7,13 @@ import notionToBlogs from './notion.mjs';
         githubToProjects(),
         notionToBlogs(),
     ]
-    Promise.all(tasks).catch((e) => {
-        console.error('<===========Step Failed==============>')
-        console.error(e);
-    }).finally(() => {
+    tasks.forEach((task) => {
+        task.catch((e) => {
+            console.error('<===========Step Failed==============>')
+            console.error(e);
+        })
+    });
+    Promise.allSettled(tasks).finally(() => {
         console.log('<===========Download Completed==============>')
     })
 })();

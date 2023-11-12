@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
-import PostBody from '../../components/post-body'
 import { getProjectConfigs, getProjectConfig, getProjectIndexPage, nameToProjectId, stripTitleHeading } from '../../lib/projects'
 import PostTitle from '../../components/post-title'
 import Head from 'next/head'
@@ -83,6 +82,9 @@ type Params = {
 
 export async function getStaticProps({ params }: Params) {
   const projId = nameToProjectId(params.project);
+  if(!projId) {
+    throw new Error(`Project ${params.project} not found`);
+  }
   const project = getProjectConfig(projId);
   let md = getProjectIndexPage(projId) || '';
   md = stripTitleHeading(md);

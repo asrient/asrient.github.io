@@ -1,8 +1,7 @@
 import Avatar from './avatar'
-import DateFormatter from './date-formatter'
 import Image from 'next/image'
 import Link from 'next/link'
-import { toTitleCase, themed } from '../lib/utils'
+import { themed } from '../lib/utils'
 
 type Props = {
   name: string

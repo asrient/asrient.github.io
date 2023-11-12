@@ -23,7 +23,7 @@ const ProjectShowcase = ({ projects, theme }: Props) => {
         {projects.map((project) => (
           <ProjectCard
             key={project.name}
-            name={project.name}
+            name={project.title}
             iconPath={project.iconPath}
             tagline={project.tagline}
             link={`/${project.name.toLowerCase()}`}

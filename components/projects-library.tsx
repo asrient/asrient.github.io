@@ -8,14 +8,14 @@ type Props = {
   theme: string
 }
 
-const ProjectCardBig = ({ name, iconPath, tagline, description, link, accentColor }: ProjectConfigType) => {
+const ProjectCardBig = ({ name, title, iconPath, tagline, description, link, accentColor }: ProjectConfigType) => {
   return (
     <div className="w-full flex flex-col justify-end py-12 px-7 md:px-12 bg-accent-4-orange dark:bg-accent-4-orange-dark h-full min-h-[30rem] border-lite">
       <div className="pb-2">
         <Image src={iconPath} height={100} width={100} alt={name + ' project icon'} />
       </div>
       <div className="text-sm text-2">
-        <div className="text-3xl font-medium text-black dark:text-white">{name}</div>
+        <div className="text-3xl font-medium text-black dark:text-white">{title}</div>
         {tagline}
       </div>
       <br />
@@ -44,7 +44,7 @@ const ProjectsLibrary = ({ projects, theme }: Props) => {
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-3 gap-y-3 md:gap-y-0">
         {projects.map((project) => (
           <ProjectCardBig
-            key={project.name}
+            key={project.title}
             {...project}
           />
         ))}

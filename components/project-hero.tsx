@@ -68,7 +68,7 @@ export default function ProjectHero({ project, theme }: Props) {
                                     width={0}
                                     className='h-11 w-11 mr-3' />}
                             <div className='text-white dark:text-zinc-800 text-3xl font-light'>
-                                {project.name}
+                                {project.title}
                             </div>
                         </div>
 

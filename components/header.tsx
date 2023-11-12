@@ -178,7 +178,7 @@ const Header = ({ theme, project, docsConfig }: {
             </Link>
             {isProjectPage && (<>
               <span className='text-xl font-light'>/</span>
-              <Link href={`/${project.name.toLowerCase()}`} className='ml-2'>{project.name}</Link>
+              <Link href={`/${project.name.toLowerCase()}`} className='ml-2'>{project.title}</Link>
             </>)}
           </div>
           <div className="leading-tight text-gray-700 dark:text-gray-300 mt-auto mb-auto flex flex-row items-center">

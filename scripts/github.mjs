@@ -3,6 +3,7 @@ import { Octokit } from "octokit";
 import { fileURLToPath } from 'url';
 import path from 'path';
 import PROJECT_REPOS from '../config/projects.json' assert { type: "json" };
+import 'dotenv/config'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -111,6 +112,7 @@ async function buildDocsConfig(proj, branch, docsPath) {
                     res.mdUrl = getRemoteFileLink(file.path, proj, branch);
                 } else {
                     tasks.push((async (res, file) => {
+                        console.log('adding new file', file, res)
                         const bp = basePath + '/' + file.name.replace('.md', '');
                         const r = await walk(proj, branch, file.path, lev + 1, bp);
                         if (!!r) {
@@ -122,7 +124,7 @@ async function buildDocsConfig(proj, branch, docsPath) {
         } else {
             return null;
         }
-        await Promise.all(tasks);
+        await Promise.allSettled(tasks);
         return res;
     }
     const docsConfig = await walk(proj, branch, docsPath, 1, `/${proj.split('/')[1]}/docs`);
@@ -158,7 +160,7 @@ async function downloadProject(proj) {
             latestVersion = data.tag_name;
         }
     } catch (e) {
-        console.warn(`No latest release found for ${proj}, using default branch..`, e);
+        console.warn(`No latest release found for ${proj}`);
     }
 
     let configFile = {};
@@ -169,7 +171,7 @@ async function downloadProject(proj) {
     }
 
     const projConfig = {
-        name: data.name,
+        title: data.name,
         tagline: data.description,
         description: data.description,
         githubUrl: data.html_url,
@@ -180,12 +182,15 @@ async function downloadProject(proj) {
         repoIconPath: null,
         accentColor: 'orange',
         docsPath: 'docs',
-        dirName: getProjDir(proj, false),
         showDownloads: latestVersion !== null,
         latestVersion,
         webAppUrl: null,
         ...configFile,
     };
+
+    // To make sure these properties are not overriden by config
+    projConfig.name = data.name;
+    projConfig.dirName = getProjDir(proj, false);
 
     try {
         const projIconBuffer = Buffer.from(await (await downloadProjFile(projConfig.iconPath, proj, projConfig.defaultBranch)).arrayBuffer());
@@ -226,14 +231,16 @@ export default () => {
         const tasks = [];
         cleanup(true);
         UPDATE_PROJECT.forEach((proj) => {
-            tasks.push(downloadProject(proj));
+            const task = downloadProject(proj);
+            task.catch((e) => {
+                console.error('Error while downloading project', proj, e);
+            });
+            tasks.push(task);
         });
 
-        Promise.all(tasks).then(() => {
+        Promise.allSettled(tasks).then(() => {
             console.log(`${tasks.length} projects downloaded. ====>`);
             resolve();
-        }).catch((err) => {
-            reject(err);
         });
     });
 };

@@ -36,7 +36,7 @@ const Footer = ({ theme, project, currentDoc, lastUpdatedOn }: {
                   className='inline-block mr-3'
                   alt="Logo - Rainbow"
                 />
-                <span>{project?.name || BRAND_NAME}</span>
+                <span>{project?.title || BRAND_NAME}</span>
               </Link>
             </div>
           </h3>
@@ -62,7 +62,7 @@ const Footer = ({ theme, project, currentDoc, lastUpdatedOn }: {
           <div className='flex flex-row mt-2 lg:mt-0'>
             {
               FOOTER_LINKS.map((link, index) => (
-                <Link className={`underline text-blue-800 ${index !== 0 ? 'ml-3' : ''}`} href={link.LINK} key={link.LINK + link.NAME}>{link.NAME}</Link>))
+                <Link className={`text-blue-500 ${index !== 0 ? 'ml-3' : ''}`} href={link.LINK} key={link.LINK + link.NAME}>{link.NAME}</Link>))
             }
           </div>
         </div>

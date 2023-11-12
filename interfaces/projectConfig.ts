@@ -1,6 +1,8 @@
 
 type ProjectConfigType = {
     name: string,
+    title: string,
+    slug: string,
     tagline: string,
     description: string,
     githubUrl: string,
