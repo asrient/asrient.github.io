@@ -12,6 +12,7 @@ import cn from 'classnames';
 import { SidebarRouteTree } from './docs-sidebar/route-tree'
 import { BRAND_NAME } from '../lib/constants'
 import DarkModeToggle from './dark-mode-toggle'
+import { downloadUrl } from '../lib/projectUtils'
 
 const githubIcon = (
   <svg
@@ -36,10 +37,15 @@ interface LinkType {
 const Links = ({ links }: {
   links: LinkType[]
 }) => {
+  const len = links.length;
   return (<>
-    {links.map((link, i) => (<Link href={link.url} key={link.name + link.url} target={!!link.external ? '_blank' : '_self'} className={`hover:underline${i > 0 ? ' ml-5' : ''}`}>
-      {link.icon || link.name}
-    </Link>
+    {links.map((link, i) => (
+      <Link href={link.url}
+        key={link.name + link.url}
+        target={!!link.external ? '_blank' : '_self'}
+        className={`hover:underline${i > 0 ? ' ml-5' : ''} ${(len - i) > 2 ? 'hidden md:block' : ''}`}>
+        {link.icon || link.name}
+      </Link>
     ))}
   </>)
 }
@@ -133,6 +139,13 @@ const Header = ({ theme, project, docsConfig }: {
       external: true,
       icon: githubIcon
     }];
+    if (project.showDownloads) {
+      links = [{
+        name: 'Download',
+        url: downloadUrl(project),
+        external: true,
+      }, ...links];
+    }
   }
 
   return (

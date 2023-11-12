@@ -17,7 +17,7 @@ export function nameToProjectId(name: string) {
 
 export function getProjDir(proj: string) {
   const parts = proj.split('/');
-  if(parts.length < 2) {
+  if (parts.length < 2) {
     throw new Error(`Invalid project name: ${proj}. Must be in the format <username>/<repo>.`);
   }
   const dir = `${parts[0]}-${parts[1]}`
@@ -26,7 +26,7 @@ export function getProjDir(proj: string) {
 
 export function getProjectConfig(proj: string): ProjectConfigType {
   const dir = getProjDir(proj);
-  if(!fs.existsSync(dir)) {
+  if (!fs.existsSync(dir)) {
     throw new Error(`Project ${proj} does not exist in _projects directory. Please run \`npm run fetch\` to populate the directory.`);
   }
   return JSON.parse(fs.readFileSync(`${dir}/config.json`, 'utf8'));
@@ -64,10 +64,10 @@ export function getAllDocsPaths() {
 
 // Breath-first search
 export function getRouteFromSlug(slug: string) {
-  if(slug[0] === '/') {
+  if (slug[0] === '/') {
     slug = slug.slice(1);
   }
-  if(slug[slug.length - 1] === '/') {
+  if (slug[slug.length - 1] === '/') {
     slug = slug.slice(0, slug.length - 1);
   }
 
@@ -75,11 +75,11 @@ export function getRouteFromSlug(slug: string) {
     if (remainingPath.length === 0) {
       return d;
     }
-    for(let subD of d.routes) {
+    for (let subD of d.routes) {
       // console.log('check path', subD.slugTitle, remainingPath[0])
-      if(subD.slugTitle === remainingPath[0]) {
+      if (subD.slugTitle === remainingPath[0]) {
         let res = walk(remainingPath.slice(1), subD);
-        if(!!res) {
+        if (!!res) {
           return res;
         }
       }
@@ -88,7 +88,7 @@ export function getRouteFromSlug(slug: string) {
   }
   // slug: [project name]/docs/[...path]
   const proj = nameToProjectId(slug.split('/')[0]);
-  if(!proj) {
+  if (!proj) {
     return null;
   }
   const docsConfig = getDocsConfig(proj);
@@ -102,10 +102,14 @@ export function getRouteFromSlug(slug: string) {
 }
 
 export async function fetchMd(url: string) {
-  if(!url) {
+  if (!url) {
     return null;
   }
   const res = await fetch(url);
   const text = await res.text();
   return text;
+}
+
+export function stripTitleHeading(md: string) {
+  return md.replace(/^# .*\n/, '');
 }

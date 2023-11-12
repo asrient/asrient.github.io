@@ -11,11 +11,15 @@ const explicitSafeList = [];
 
 // ADD HERE MANUALLY ALL THE DARK MODE ACCENT COLORS USED
 const DARK_MODE_ENABLE = [
-  'bg-accent-5',
+  'bg-accent-1',
+  'bg-accent-2',
+  'bg-accent-3',
   'bg-accent-4',
+  'bg-accent-5',
   'border-accent-2',
   'border-accent-3',
   'text-accent-2',
+  'text-accent-5',
   'border-accent-4'
 ]
 
@@ -45,6 +49,9 @@ module.exports = {
   darkMode: ['class'],
   theme: {
     extend: {
+      fontFamily: {
+        'poppins': ['Poppins', 'sans-serif']
+      },
       colors: {
         ...colors,
         success: '#0070f3',

@@ -2,15 +2,17 @@ import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
 import PostBody from '../../components/post-body'
-import { getProjectConfigs, getProjectConfig, getProjectIndexPage, nameToProjectId } from '../../lib/projects'
+import { getProjectConfigs, getProjectConfig, getProjectIndexPage, nameToProjectId, stripTitleHeading } from '../../lib/projects'
 import PostTitle from '../../components/post-title'
 import Head from 'next/head'
-import { BRAND_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import type ProjectConfigType from '../../interfaces/projectConfig'
 import type RouteItem from '../../interfaces/routeItem'
 import DocsGrid from '../../components/docs-grid'
 import { getDefaultStaticProps } from '../../lib/utils'
+import ProjectHero from "../../components/project-hero";
+import { downloadUrl } from '../../lib/projectUtils'
+import ProjectLanding from '../../components/project-landing'
 
 type Props = {
   project: ProjectConfigType
@@ -37,24 +39,39 @@ export default function Project({ project, theme, content }: Props) {
       path: project.githubUrl,
     } as RouteItem);
   }
+  if (!!project?.webAppUrl) {
+    nextRoutes.push({
+      title: 'Open app',
+      path: project.webAppUrl,
+    } as RouteItem);
+  }
+  if (!!project?.showDownloads) {
+    nextRoutes.push({
+      title: 'Download',
+      path: downloadUrl(project),
+    } as RouteItem);
+  }
+
   return (
-    <Container>
+    <>
       {router.isFallback ? (
         <PostTitle>Loading…</PostTitle>
       ) : (
         <>
-          <article className="pb-32">
-            <Head>
-              <title>{title}</title>
-              <meta property="og:image" content={project.iconPath} />
-            </Head>
-            <div className='pt-16'></div>
-            <PostBody content={content} />
-            {nextRoutes.length > 0 && <DocsGrid title="Resources" theme={theme} routes={nextRoutes} />}
-          </article>
+          <Head>
+            <title>{title}</title>
+            <meta property="og:image" content={project.iconPath} />
+          </Head>
+          <ProjectHero project={project} theme={theme} />
+          <Container>
+            <article className="pb-32">
+              <ProjectLanding content={content} project={project} />
+              {nextRoutes.length > 0 && <DocsGrid title="Resources" theme={theme} routes={nextRoutes} />}
+            </article>
+          </Container>
         </>
       )}
-    </Container>
+    </>
   )
 }
 
@@ -67,7 +84,9 @@ type Params = {
 export async function getStaticProps({ params }: Params) {
   const projId = nameToProjectId(params.project);
   const project = getProjectConfig(projId);
-  const content = await markdownToHtml(getProjectIndexPage(projId) || '');
+  let md = getProjectIndexPage(projId) || '';
+  md = stripTitleHeading(md);
+  const content = await markdownToHtml(md);
 
   return {
     props: {

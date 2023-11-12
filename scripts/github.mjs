@@ -147,6 +147,20 @@ async function downloadProject(proj) {
         repo,
     });
 
+    let latestVersion = null;
+
+    try {
+        const { data } = await octokit.rest.repos.getLatestRelease({
+            owner,
+            repo,
+        });
+        if(!!data.tag_name) {
+            latestVersion = data.tag_name;
+        }
+    } catch (e) {
+        console.warn(`No latest release found for ${proj}, using default branch..`, e);
+    }
+
     let configFile = {};
     try {
         configFile = await downloadProjConfig(proj, data.default_branch);
@@ -167,6 +181,9 @@ async function downloadProject(proj) {
         accentColor: 'orange',
         docsPath: 'docs',
         dirName: getProjDir(proj, false),
+        showDownloads: latestVersion !== null,
+        latestVersion,
+        webAppUrl: null,
         ...configFile,
     };
 
