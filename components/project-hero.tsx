@@ -11,7 +11,6 @@ const Buttons = ({ project, theme }: {
     const { showDownloads, webAppUrl } = project;
     const thm = themed(theme);
     const cls = thm`buttonPrimaryRound $bg-accent-4 dark:$bg-accent-4 border-transparent dark:border-transparent`;
-    if (!showDownloads && !webAppUrl) return null;
     return (
         <div className='pt-10 px-3 flex items-center space-x-4'>
             {
@@ -28,6 +27,15 @@ const Buttons = ({ project, theme }: {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
                     </svg>
                     Download
+                </Link>
+            }
+            {
+                !showDownloads && !webAppUrl && !!project.githubUrl &&
+                <Link href={project.githubUrl} target='_blank' className={cls}>
+                    Github
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="ml-1 w-4 h-4">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
                 </Link>
             }
         </div>
