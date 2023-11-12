@@ -118,7 +118,7 @@ async function buildDocsConfig(proj, branch, docsPath) {
                         if (!!r) {
                             res.routes.push(r);
                         }
-                    })());
+                    })(res, file));
                 }
             });
         } else {
