@@ -86,7 +86,10 @@ async function buildDocsConfig(proj, branch, docsPath) {
             console.warn(`[Warning] Max depth (3) reached for ${proj}, ${pth}`);
             return null;
         }
-        const title = pth.split('/').pop()
+        let title = pth.split('/').pop();
+        if(title.endsWith('.md')) {
+            title = title.replace('.md', '');
+        }
         const res = {
             title,
             mdUrl: null,
@@ -96,7 +99,6 @@ async function buildDocsConfig(proj, branch, docsPath) {
             routes: [],
         };
         if (pth.endsWith('.md')) {
-            res.title = res.title.replace('.md', '');
             res.mdUrl = getRemoteFileLink(pth, proj, branch);
             return res;
         }

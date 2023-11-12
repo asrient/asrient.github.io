@@ -4,13 +4,12 @@ import Container from '../../../components/container'
 import PostBody from '../../../components/post-body'
 import { getRouteFromSlug, getAllDocsPaths, getProjectConfig, fetchMd } from '../../../lib/projects'
 import Head from 'next/head'
-import { BRAND_NAME } from '../../../lib/constants'
 import markdownToHtml from '../../../lib/markdownToHtml'
 import type ProjectConfigType from '../../../interfaces/projectConfig'
 import RouteItem from '../../../interfaces/routeItem'
 import { Suspense } from 'react';
 import DocsGrid from '../../../components/docs-grid'
-import { getDefaultStaticProps } from '../../../lib/utils'
+import { getDefaultStaticProps, toTitleCase } from '../../../lib/utils'
 
 type Props = {
   project: ProjectConfigType
@@ -29,24 +28,21 @@ export default function Doc({ project, theme, content, currentDoc }: Props) {
   }
 
   return (
-    <Container>
-      {/* No fallback UI so need to be careful not to suspend directly inside. */}
-      <Suspense fallback={null}>
-        {
-          <>
-            <article className="pb-32">
-              <Head>
-                <title>{title}</title>
-                <meta property="og:image" content={project?.iconPath} />
-              </Head>
-              <div className='pt-16'></div>
-              <PostBody content={content} />
-              {currentDoc.routes.length > 0 && <DocsGrid theme={theme} routes={currentDoc.routes} />}
-            </article>
-          </>
-        }
-      </Suspense>
-    </Container>
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta property="og:image" content={project?.iconPath} />
+      </Head>
+      <Container>
+        {/* No fallback UI so need to be careful not to suspend directly inside. */}
+        <Suspense fallback={null}>
+          <article className="pb-32 pt-16">
+            <PostBody content={content} />
+            {currentDoc.routes.length > 0 && <DocsGrid theme={theme} routes={currentDoc.routes} />}
+          </article>
+        </Suspense>
+      </Container>
+    </>
   )
 }
 
@@ -71,7 +67,9 @@ export async function getStaticProps({ params }: Params) {
     }
     const project = getProjectConfig(projectId);
 
-    const content = await markdownToHtml(await fetchMd(currentDoc?.mdUrl) || '');
+    const defaultText = `# ${toTitleCase(currentDoc?.title || projectId)} \n Select a topic from below to continue reading.`;
+
+    const content = await markdownToHtml((await fetchMd(currentDoc?.mdUrl)) || defaultText);
 
     return {
       props: {

@@ -81,7 +81,7 @@ function Selectable({
 
     let cls = '';
     if (isSelected) {
-        cls += thm`rounded $bg-accent-4 dark:$bg-accent-4 border-l-4 $border-accent-2 border-solid`;
+        cls += thm`rounded $bg-accent-4 dark:$bg-accent-4 border-l-4 $border-accent-3 dark:$border-accent-2 border-solid`;
     }
     return (
         <div className={cls}>
@@ -108,12 +108,6 @@ export function SidebarRouteTree({
                 if (level === 0) {
                     // if current route item has no path and children treat it as an API sidebar heading
                     listItem = (<Fragment key={`${title}-${level}-separator`}>
-                        {index !== 0 && (
-                            <li
-                                role="separator"
-                                className="mt-4 mb-2 ml-5 border-b border-border dark:border-neutral-700"
-                            />
-                        )}
                         <Selectable isSelected={selected} theme={theme}>
                             <SidebarLink
                                 key={`${title}-${path}-${level}-link`}

@@ -4,10 +4,10 @@
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import {useRef, useEffect} from 'react';
+import { useRef, useEffect } from 'react';
 import * as React from 'react';
 import cn from 'classnames';
-import {IconNavArrow} from '../icon/IconNavArrow';
+import { IconNavArrow } from '../icon/IconNavArrow';
 import Link from 'next/link';
 
 interface SidebarLinkProps {
@@ -58,22 +58,20 @@ export function SidebarLink({
       className={cn(
         'p-2 pr-2 w-full text-left relative flex items-center justify-between',
         {
-          'text-sm pl-6': level > 0,
-          'pl-5': level < 2,
-          'pl-9 font-light text-gray-600 dark:text-gray-400': level === 2,
+          'pl-4': level === 0,
+          'text-sm': level > 0,
+          'pl-8': level >= 1,
+          'pl-12 font-light text-gray-600 dark:text-gray-400': level >= 2,
           'text-base font-bold': level === 0,
-          'text-primary dark:text-primary-dark': level === 0 && !selected,
-          'text-base text-secondary dark:text-secondary-dark':
-            level > 0 && !selected,
-          'text-base text-link dark:text-link-dark bg-highlight dark:bg-highlight-dark border-blue-40 hover:bg-highlight hover:text-link dark:hover:bg-highlight-dark dark:hover:text-link-dark':
-            selected,
-          'bg-gray-200 hover:bg-gray-300':
+          'bg-gray-300/50 hover:bg-gray-700/50':
             isPending,
+          'text-gray-700 dark:text-gray-300': !selected && level >= 1,
         }
       )}>
       {/* This here needs to be refactored ofc */}
       <span
-        className={cn({
+        className={cn(
+          'flex items-center truncate', {
           'text-gray-400 dark:text-gray-500': wip,
         })}>
         {title}
