@@ -44,7 +44,7 @@ const Footer = ({ theme, project, currentDoc, lastUpdatedOn }: {
             {!!currentDoc && currentDoc.githubUrl ? <a
               target='_blank'
               href={currentDoc.githubUrl}
-              className={thm`hover:bg-white $text-accent-1 border $border-accent-3 py-2 px-3 lg:px-4 duration-200 transition-colors mb-6 lg:mb-0`}
+              className={thm`hover:bg-white/30 dark:hover:bg-black/30 $text-accent-1 dark:$text-accent-2 border $border-accent-1 dark:$border-accent-2 py-2 px-3 lg:px-4 duration-200 transition-colors mb-6 lg:mb-0`}
             >
               Edit this page on GitHub
             </a> :

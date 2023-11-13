@@ -19,6 +19,7 @@ const DARK_MODE_ENABLE = [
   'border-accent-2',
   'border-accent-3',
   'text-accent-2',
+  'text-accent-3',
   'text-accent-5',
   'border-accent-4'
 ]
