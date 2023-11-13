@@ -203,7 +203,7 @@ async function downloadProject(proj) {
         projConfig.iconPath = iconPath;
     } catch (e) {
         console.warn(`No icon found for ${proj}, using default icon..`, e);
-        projConfig.iconPath = '/assets/icon/icon-default.svg';
+        projConfig.iconPath = '/assets/icon/default-icon.png';
     }
 
     const projDir = `${PROJECTS_DIR}/${projConfig.dirName}`;
