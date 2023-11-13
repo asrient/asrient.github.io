@@ -87,11 +87,11 @@
 
 @layer components {
     hr {
-        @apply dark:border-neutral-700;
+        @apply border-neutral-400/30 dark:border-neutral-600/40;
     }
 
     .h2 {
-        @apply pl-2 pb-7 md:pb-8 text-3xl md:text-5xl font-bold tracking-tighter leading-tight;
+        @apply pl-2 pb-7 md:pb-8 text-3xl md:text-5xl font-bold tracking-tighter leading-tight font-poppins;
     }
 
     .buttonPrimaryRound {

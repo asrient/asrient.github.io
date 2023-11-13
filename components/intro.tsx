@@ -28,7 +28,7 @@ const Intro = ({ theme }: {
           </div>
         </div>
       </div>
-      <h4 className="text-left text-lg mt-5 md:pl-8 lg:pl-10 md:max-w-[50vw] font-serif text-2">
+      <h4 className="text-left text-lg mt-5 md:pl-8 lg:pl-10 md:max-w-[50vw] text-2 font-sans">
         <span dangerouslySetInnerHTML={{ __html: INTRO }}></span>
         <div className='pt-4 leading-relaxed'>
           Also find me on:
@@ -36,7 +36,7 @@ const Intro = ({ theme }: {
             {
               Object.keys(SOCIALS).map((social) => {
                 return (
-                  <Link href={SOCIALS[social]} target="_blank" key={social} className='mr-4 hover:underline'>{toTitleCase(social)}</Link>
+                  <Link href={SOCIALS[social]} target="_blank" key={social} className='mr-4 hover:underline font-poppins'>{toTitleCase(social)}</Link>
                 )
               })
             }

@@ -38,6 +38,12 @@ const Buttons = ({ project, theme }: {
                     </svg>
                 </Link>
             }
+            {
+                (!showDownloads || !webAppUrl) && !!project.docsPath &&
+                <Link href={`/${project.name.toLowerCase()}/docs`} className={cls}>
+                    Read docs
+                </Link>
+            }
         </div>
     )
 }

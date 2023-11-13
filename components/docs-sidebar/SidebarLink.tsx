@@ -60,12 +60,12 @@ export function SidebarLink({
         {
           'pl-4': level === 0,
           'text-sm': level > 0,
-          'pl-8': level >= 1,
+          'pl-8': level == 1,
           'pl-12 font-light text-gray-600 dark:text-gray-400': level >= 2,
           'text-base font-bold': level === 0,
-          'bg-gray-300/50 hover:bg-gray-700/50':
-            isPending,
+          'bg-gray-300/50 hover:bg-gray-700/50': isPending,
           'text-gray-700 dark:text-gray-300': !selected && level >= 1,
+          'hover:bg-gray-100/30 dark:hover:bg-gray-700/30 rounded-sm transition-colors duration-200': !selected,
         }
       )}>
       {/* This here needs to be refactored ofc */}
