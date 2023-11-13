@@ -41,7 +41,7 @@ const ProjectsLibrary = ({ projects, theme }: Props) => {
         Projects
       </h2>
       <br />
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-3 gap-y-3 md:gap-y-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-3 gap-y-3">
         {projects.map((project) => (
           <ProjectCardBig
             key={project.title}

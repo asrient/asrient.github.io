@@ -38,4 +38,5 @@ next-env.d.ts
 _projects/*
 _posts/*
 public/assets/blog/images/
+public/assets/icon/icon-*
 /nbproject/private/
