@@ -12,6 +12,7 @@ import { getDefaultStaticProps } from '../../lib/utils'
 import ProjectHero from "../../components/project-hero";
 import { downloadUrl } from '../../lib/projectUtils'
 import ProjectLanding from '../../components/project-landing'
+import { BRAND_NAME } from '../../lib/constants'
 
 type Props = {
   project: ProjectConfigType
@@ -21,7 +22,7 @@ type Props = {
 
 export default function Project({ project, theme, content }: Props) {
   const router = useRouter()
-  const title = `${project.name} — ${project.tagline}`
+  const title = `${project.name} — ${BRAND_NAME}`
   if (!router.isFallback && !project?.name) {
     return <ErrorPage statusCode={404} />
   }

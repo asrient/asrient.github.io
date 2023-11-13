@@ -20,7 +20,7 @@ const DocsGrid = ({ routes, theme, title }: Props) => {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-2 lg:gap-x-3 lg:gap-y-3">
         {routes.map((route) => (
-          <Link href={route.path} key={route.path} className={thm`text-base font-light text-gray-600 dark:text-gray-400 px-6 py-8 md:px-8 md:py-10 bg-white/40 dark:bg-neutral-700/40 hover:bg-neutral-100 dark:hover:bg-neutral-700 hover:border-transparent rounded-xl border-neutral-200 dark:border-neutral-900 border border-solid`} >
+          <Link href={route.path} key={route.path} className={thm`text-base font-light text-gray-900/60 dark:text-white/50 px-6 py-8 md:px-8 md:py-10 bg-white/40 dark:bg-neutral-700/40 hover:bg-neutral-500/10 dark:hover:bg-white/10 hover:border-transparent rounded-xl border-neutral-500/30 border border-solid`} >
             {route.title}
             </Link>
         ))}

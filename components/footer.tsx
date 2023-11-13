@@ -23,7 +23,7 @@ const Footer = ({ theme, project, currentDoc, lastUpdatedOn }: {
   }, []);
 
   return (
-    <footer className={thm`$bg-accent-5 dark:$bg-accent-5 border-t border-neutral-500 border-opacity-20 dark:border-neutral-700 pt-12 pb-4`}>
+    <footer className={thm`$bg-accent-5 dark:$bg-accent-5 border-lite border-t pt-12 pb-4`}>
       <Container className='max-w-5xl'>
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
           <h3 className="text-3xl font-bold tracking-tighter leading-tight text-center lg:text-left mt-5 lg:mt-0 lg:mb-0 lg:pr-4 lg:w-1/2">
@@ -48,13 +48,13 @@ const Footer = ({ theme, project, currentDoc, lastUpdatedOn }: {
             >
               Edit this page on GitHub
             </a> :
-              <a href={SITE_GITHUB_URL} target='_blank' className='text-gray-500 hover:underline hidden lg:inline'>
+              <a href={SITE_GITHUB_URL} target='_blank' className='dark:text-white/40 text-gray-700/80 underline hidden lg:inline'>
                 Statically generated using Next.js
               </a>
             }
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row justify-center lg:justify-between text-center items-center text-sm font-light text-gray-500 pt-4">
+        <div className="flex flex-col lg:flex-row justify-center lg:justify-between text-center items-center text-sm font-light dark:text-white/40 text-gray-700/80 pt-4">
           <div>
             <span>{FOOTER_TEXT}</span>
             <span>&nbsp;Last updated on {date}</span>

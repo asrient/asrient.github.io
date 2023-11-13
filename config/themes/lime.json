@@ -1,0 +1,16 @@
+{
+    "light": {
+        "accent-5": "#f9fccb",
+        "accent-4": "#f1f99d",
+        "accent-3": "#e2f165",
+        "accent-2": "#d2e63d",
+        "accent-1": "#b3cb17"
+    },
+    "dark": {
+        "accent-1": "#b3cb17",
+        "accent-2": "#8ca20e",
+        "accent-3": "#697b10",
+        "accent-4": "#546212",
+        "accent-5": "#303a0e"
+    }
+}

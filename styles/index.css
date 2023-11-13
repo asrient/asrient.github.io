@@ -87,7 +87,7 @@
 
 @layer components {
     hr {
-        @apply border-neutral-400/30 dark:border-neutral-600/40;
+        @apply border-neutral-400/30 dark:border-neutral-400/20;
     }
 
     .h2 {
