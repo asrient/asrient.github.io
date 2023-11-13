@@ -58,4 +58,5 @@ Host the contents of this directory to cloud.
 
 # Notes
 
-`blog-starter` uses [Tailwind CSS](https://tailwindcss.com) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3).
+- `blog-starter` uses [Tailwind CSS](https://tailwindcss.com) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3).
+- Create new themes using [uicolors](https://uicolors.app/create).
