@@ -1,6 +1,7 @@
 import ProjectConfigType from "../interfaces/projectConfig"
 import PostBody from "./post-body";
 import HomeCloudLanding from "./homecloud/landing";
+import Container from "./container";
 
 /*
 * Update this component to add a custom landing page for a project.
@@ -11,16 +12,17 @@ import HomeCloudLanding from "./homecloud/landing";
 * The component will render the appropriate landing page based on the project's name.
 */
 
-const ProjectLanding = ({ content, project }: {
+const ProjectLanding = ({ content, project, theme }: {
     content: string,
     project: ProjectConfigType,
+    theme: string
 }) => {
     const name = project.name.toLowerCase();
     switch (name) {
         case 'homecloud':
-            return <HomeCloudLanding />
+            return <HomeCloudLanding theme={theme} project={project} />
         default:
-            return <PostBody content={content} />
+            return <Container><PostBody content={content} /></Container>
     }
 }
 

@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import Container from '../../components/container'
 import { getProjectConfigs, getProjectConfig, getProjectIndexPage, nameToProjectId, stripTitleHeading } from '../../lib/projects'
 import PostTitle from '../../components/post-title'
 import Head from 'next/head'
@@ -13,6 +12,7 @@ import ProjectHero from "../../components/project-hero";
 import { downloadUrl } from '../../lib/projectUtils'
 import ProjectLanding from '../../components/project-landing'
 import { BRAND_NAME } from '../../lib/constants'
+import Container from '../../components/container'
 
 type Props = {
   project: ProjectConfigType
@@ -22,7 +22,7 @@ type Props = {
 
 export default function Project({ project, theme, content }: Props) {
   const router = useRouter()
-  const title = `${project.name} — ${BRAND_NAME}`
+  const title = `${project.name} — ${project.tagline || BRAND_NAME}`
   if (!router.isFallback && !project?.name) {
     return <ErrorPage statusCode={404} />
   }
@@ -63,12 +63,12 @@ export default function Project({ project, theme, content }: Props) {
             <meta property="og:image" content={project.iconPath} />
           </Head>
           <ProjectHero project={project} theme={theme} />
-          <Container>
-            <article className="pb-32">
-              <ProjectLanding content={content} project={project} />
-              {nextRoutes.length > 0 && <DocsGrid title="Resources" theme={theme} routes={nextRoutes} />}
-            </article>
-          </Container>
+          <article className="pb-32">
+            <ProjectLanding content={content} project={project} theme={theme} />
+            {nextRoutes.length > 0 && <Container>
+              <DocsGrid title="Resources" theme={theme} routes={nextRoutes} />
+            </Container>}
+          </article>
         </>
       )}
     </>
@@ -83,7 +83,7 @@ type Params = {
 
 export async function getStaticProps({ params }: Params) {
   const projId = nameToProjectId(params.project);
-  if(!projId) {
+  if (!projId) {
     throw new Error(`Project ${params.project} not found`);
   }
   const project = getProjectConfig(projId);
