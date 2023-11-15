@@ -323,13 +323,25 @@ const AppsSection = () => {
     </section>)
 }
 
-const DownloadCard = ({ name, description, url, className }: {
+const DownloadCard = ({ name, description, url, color }: {
     name: string,
     description: string,
     url: string,
-    className?: string,
+    color?: 'blue' | 'purple',
 }) => {
-    return (<div className={cn("px-8 py-8 dark:bg-zinc-800 bg-zinc-100/60 border-lite rounded-md flex flex-col items-center md:items-baseline", className)}>
+    let className = '';
+    switch (color) {
+        case 'blue':
+            className = 'bg-blue-200/60 dark:bg-blue-900/60';
+            break;
+        case 'purple':
+            className = 'bg-purple-200/60 dark:bg-purple-900/60';
+            break;
+        default:
+            className = 'dark:bg-zinc-800 bg-zinc-100/60';
+            break;
+    }
+    return (<div className={cn("px-8 py-8 border-lite rounded-md flex flex-col items-center md:items-baseline", className)}>
         <h3 className="text-2xl font-semibold">
             {name}
         </h3>
@@ -358,10 +370,10 @@ const CtaSection = ({ project }: {
             <div className="mt-10 grid grid-cols-1 md:grid-cols-2 space-y-2 md:space-y-0 md:space-x-3">
                 <DownloadCard name="HomeCloud Desktop"
                     description="For Windows, Linux and macOS."
-                    className="bg-blue-200/60 dark:bg-blue-900/60"
+                    color="blue"
                     url={downloadLink} />
                 <DownloadCard name="HomeCloud Server"
-                    className="bg-purple-200/60 dark:bg-purple-900/60"
+                    color="purple"
                     description="For self-hosted web version."
                     url={downloadLink} />
             </div>
