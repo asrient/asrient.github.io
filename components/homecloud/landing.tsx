@@ -323,11 +323,12 @@ const AppsSection = () => {
     </section>)
 }
 
-const DownloadCard = ({ name, description, url, color }: {
+const DownloadCard = ({ name, description, url, color, buttonText }: {
     name: string,
     description: string,
     url: string,
     color?: 'blue' | 'purple',
+    buttonText?: string,
 }) => {
     let className = '';
     switch (color) {
@@ -349,7 +350,7 @@ const DownloadCard = ({ name, description, url, color }: {
             {description}
         </div>
         <Link href={url} className="buttonPrimaryRound mt-8">
-            Download
+            {buttonText || 'Download'}
         </Link>
     </div>)
 }
@@ -375,7 +376,8 @@ const CtaSection = ({ project }: {
                 <DownloadCard name="HomeCloud Server"
                     color="purple"
                     description="For self-hosted web version."
-                    url={downloadLink} />
+                    buttonText="Setup Guide"
+                    url='/homecloud/docs/help/self-hosting/installation' />
             </div>
             <div className="mt-2 md:mt-3 py-8 px-6 border-lite rounded-md dark:bg-zinc-900/10 bg-zinc-100/10">
                 <h3 className="flex flex-col items-center">

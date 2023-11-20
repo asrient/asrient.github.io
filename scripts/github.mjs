@@ -129,7 +129,7 @@ async function buildDocsConfig(proj, branch, docsPath) {
         await Promise.allSettled(tasks);
         return res;
     }
-    const docsConfig = await walk(proj, branch, docsPath, 1, `/${proj.split('/')[1]}/docs`);
+    const docsConfig = await walk(proj, branch, docsPath, 0, `/${proj.split('/')[1]}/docs`);
     fs.writeFileSync(docsFilePath, JSON.stringify(docsConfig, null, 2));
 }
 
@@ -162,6 +162,7 @@ async function downloadProject(proj) {
             latestVersion = data.tag_name;
         }
     } catch (e) {
+        console.log('error message', e.message)
         console.warn(`No latest release found for ${proj}`);
     }
 
