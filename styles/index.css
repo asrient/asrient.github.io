@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Kulim+Park:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -90,16 +90,28 @@
         @apply border-neutral-400/30 dark:border-neutral-400/20;
     }
 
+    .text-brand {
+        @apply font-brand;
+    }
+
     .h2 {
-        @apply pl-2 pb-7 md:pb-8 text-3xl md:text-5xl font-bold tracking-tighter leading-tight font-poppins;
+        @apply text-brand pl-2 pb-7 md:pb-8 text-3xl md:text-5xl font-bold;
+    }
+
+    .buttonPrimaryRoundBlack {
+        @apply flex items-center text-slate-600 max-w-max px-5 py-3 rounded-full border-gray-600 border-2 border-solid hover:bg-slate-600 hover:text-white;
     }
 
     .buttonPrimaryRound {
-        @apply flex items-center text-slate-600 dark:text-slate-300 max-w-max px-5 py-3 rounded-full border-gray-600 dark:border-gray-300 border-2 border-solid hover:bg-slate-600 dark:hover:bg-slate-300 hover:text-white dark:hover:text-black;
+        @apply buttonPrimaryRoundBlack dark:text-slate-300  dark:border-gray-300 dark:hover:bg-slate-300 dark:hover:text-black;
+    }
+
+    .border-color-lite {
+        @apply border-[#5e5e5e2e] dark:border-[#8989892e];
     }
 
     .border-lite {
-        @apply border-solid border border-[#5e5e5e2e] dark:border-[#8989892e]
+        @apply border-solid border border-color-lite;
     }
 
     .text-2 {

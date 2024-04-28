@@ -23,12 +23,12 @@ const Footer = ({ theme, project, currentDoc, lastUpdatedOn }: {
   }, []);
 
   return (
-    <footer className={thm`$bg-accent-5 dark:$bg-accent-5 border-lite border-t pt-12 pb-4`}>
+    <footer className={thm`$bg-accent-5 dark:$bg-accent-5 border-color-lite border-t pt-12 pb-4`}>
       <Container className='max-w-5xl'>
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
           <h3 className="text-3xl font-bold tracking-tighter leading-tight text-center lg:text-left mt-5 lg:mt-0 lg:mb-0 lg:pr-4 lg:w-1/2">
             <div className='flex flex-row justify-center items-center md:justify-start'>
-              <Link href="/">
+              <Link href={project ? `/${project.name.toLowerCase()}` : "/"}>
                 <Image
                   src={project?.iconPath || "/assets/icon/logo.svg"}
                   width={40}

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { themed } from '../lib/utils'
 import ProjectConfigType from '../interfaces/projectConfig'
 import RouteItem from '../interfaces/routeItem'
-import { useState, useRef, useEffect, Suspense } from 'react'
+import React, { useState, useRef, useEffect, Suspense } from 'react'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { useRouter } from 'next/router'
 import { IconClose } from './icon/IconClose';
@@ -50,10 +50,11 @@ const Links = ({ links }: {
   </>)
 }
 
-const Header = ({ theme, project, docsConfig }: {
+const Header = ({ theme, project, docsConfig, style }: {
   theme: string,
   project?: ProjectConfigType,
-  docsConfig?: RouteItem
+  docsConfig?: RouteItem,
+  style?: React.CSSProperties,
 }) => {
 
   const thm = themed(theme);
@@ -151,7 +152,7 @@ const Header = ({ theme, project, docsConfig }: {
   return (
     <>
       <div ref={scrollDetectorRef} />
-      <div className={thm`flex p-2 pl-5 pr-5 text-sm justify-center $bg-accent-5 dark:$bg-accent-5 top-0 z-20` + (isProjectPage ? ' sticky' : '')}>
+      <div className={thm`flex p-2 pl-5 pr-5 text-sm justify-center $bg-accent-5 dark:$bg-accent-5 top-0 z-20 w-full` + (isProjectPage ? ' sticky' : '')} style={style}>
         <div className='max-w-6xl flex flex-row w-full justify-between'>
           <div className="leading-tight font-semibold flex items-center">
             {showDocsSidebar && <button
@@ -166,7 +167,7 @@ const Header = ({ theme, project, docsConfig }: {
               )}>
               {isOpen ? <IconClose /> : <IconHamburger />}
             </button>}
-            <Link className='flex items-center' href="/">
+            <Link className='flex items-center text-black dark:text-white' href="/">
               <Image
                 src="/assets/icon/logo.svg"
                 width={30}
@@ -181,7 +182,7 @@ const Header = ({ theme, project, docsConfig }: {
               <Link href={`/${project.name.toLowerCase()}`} className='ml-2'>{project.title}</Link>
             </>)}
           </div>
-          <div className="leading-tight text-gray-700 dark:text-gray-300 mt-auto mb-auto flex flex-row items-center">
+          <div className="leading-tight text-neutral-700 dark:text-neutral-100 mt-auto mb-auto flex flex-row items-center">
             <Links links={links} />
             <DarkModeToggle />
           </div>
