@@ -3,6 +3,7 @@ import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 import PostTitle from './post-title'
 import type Author from '../interfaces/author'
+import Container from './container'
 
 type Props = {
   title: string
@@ -14,23 +15,22 @@ type Props = {
 const PostHeader = ({ title, coverImage, date, author }: Props) => {
   return (
     <>
-      <PostTitle>{title}</PostTitle>
-      <div className="hidden md:block md:mb-12">
-        <Avatar name={author.name} picture={author.picture} />
-      </div>
-      <div className="mb-8 md:mb-16 sm:mx-0">
-        <CoverImage 
-        full={true} 
-        title={title} 
-        src={coverImage} />
-      </div>
-      <div className="max-w-5xl mx-auto">
-        <div className="block md:hidden mb-6">
+      <Container>
+        <PostTitle>{title}</PostTitle>
+        <div className="flex justify-between items-center mb-6">
+        <div>
           <Avatar name={author.name} picture={author.picture} />
         </div>
-        <div className="mb-6 text-lg">
+        <div className="text-lg">
           <DateFormatter dateString={date} />
         </div>
+      </div>
+      </Container>
+      <div className="mb-8 md:mb-16 sm:mx-0">
+        <CoverImage
+          full={true}
+          title={title}
+          src={coverImage} />
       </div>
     </>
   )

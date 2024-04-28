@@ -13,7 +13,7 @@ const DocsGrid = ({ routes, theme, title }: Props) => {
   const thm = themed(theme);
 
   return (
-    <section className='pt-12 mx-auto max-w-5xl relative z-10'>
+    <section className='pt-12 mx-auto max-w-5xl'>
       <hr className='mb-10' />
       <h2 className='h2'>
         {title || 'Read next'}

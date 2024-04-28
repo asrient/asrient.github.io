@@ -6,6 +6,7 @@ import { themed } from '../lib/utils'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import DateFormatter from './date-formatter'
 
 const Footer = ({ theme, project, currentDoc, lastUpdatedOn }: {
   theme: string;
@@ -19,7 +20,7 @@ const Footer = ({ theme, project, currentDoc, lastUpdatedOn }: {
 
   useEffect(() => {
     console.log('Site last built date:', lastUpdatedOn)
-    setDate(new Date(lastUpdatedOn || 0).toDateString());
+    setDate(new Date(lastUpdatedOn || 0).toISOString());
   }, []);
 
   return (
@@ -57,7 +58,7 @@ const Footer = ({ theme, project, currentDoc, lastUpdatedOn }: {
         <div className="flex flex-col lg:flex-row justify-center lg:justify-between text-center items-center text-sm font-light dark:text-white/40 text-gray-700/80 pt-4">
           <div>
             <span>{FOOTER_TEXT}</span>
-            <span>&nbsp;Last updated on {date}</span>
+            <span>&nbsp;Last updated on <DateFormatter dateString={date} /></span>
           </div>
           <div className='flex flex-row mt-2 lg:mt-0'>
             {

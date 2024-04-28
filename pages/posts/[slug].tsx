@@ -24,9 +24,11 @@ export default function Post({ post, morePosts, preview }: Props) {
     return <ErrorPage statusCode={404} />
   }
   return (
-      <Container>
+      <>
         {router.isFallback ? (
-          <PostTitle>Loading…</PostTitle>
+          <Container>
+            <PostTitle>Loading…</PostTitle>
+          </Container>
         ) : (
           <>
             <article className="pb-32">
@@ -40,11 +42,13 @@ export default function Post({ post, morePosts, preview }: Props) {
                 date={post.date}
                 author={post.author}
               />
-              <PostBody content={post.content} />
+              <Container>
+                <PostBody content={post.content} />
+              </Container>
             </article>
           </>
         )}
-      </Container>
+      </>
   )
 }
 

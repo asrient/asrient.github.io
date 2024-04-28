@@ -65,7 +65,7 @@ export default function Project({ project, theme, content }: Props) {
           <ProjectHero project={project} theme={theme} />
           <article className="pb-32">
             <ProjectLanding content={content} project={project} theme={theme} />
-            {nextRoutes.length > 0 && <Container>
+            {nextRoutes.length > 0 && <Container className='relative z-10'>
               <DocsGrid title="Resources" theme={theme} routes={nextRoutes} />
             </Container>}
           </article>
