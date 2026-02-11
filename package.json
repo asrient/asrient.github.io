@@ -6,7 +6,7 @@
     "start": "echo 'Use `npm run dev` for development, `npm run export` for static generation.' && exit 1",
     "demo": "cd out && python3 -m http.server 8000",
     "typecheck": "tsc",
-    "fetch": "node scripts/download.mjs",
+    "fetch": "ts-node --project scripts/tsconfig.json scripts/download.ts",
     "export": "npm run fetch && npm run build"
   },
   "dependencies": {
@@ -32,7 +32,7 @@
     "autoprefixer": "^10.4.7",
     "dotenv": "^16.2.0",
     "notion-to-md": "^3.1.0",
-    "octokit": "^2.0.19",
+    "octokit": "^5.0.5",
     "postcss": "^8.4.14",
     "remark-gfm": "^3.0.1",
     "tailwindcss": "^3.3.2",

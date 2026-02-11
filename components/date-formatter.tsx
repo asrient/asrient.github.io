@@ -9,7 +9,10 @@ const DateFormatter = ({ dateString }: Props) => {
   const [formatedDateString, setFormatedDateString] = useState('A while ago');
 
   useEffect(() => {
-    setFormatedDateString(format(parseISO(dateString), 'LLLL	d, yyyy'));
+    if (!dateString) return;
+    const parsed = parseISO(dateString);
+    if (isNaN(parsed.getTime())) return;
+    setFormatedDateString(format(parsed, 'LLLL d, yyyy'));
   }, [dateString]);
 
   return <time dateTime={dateString}>{formatedDateString}</time>

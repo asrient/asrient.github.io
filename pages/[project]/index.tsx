@@ -9,7 +9,7 @@ import type RouteItem from '../../interfaces/routeItem'
 import DocsGrid from '../../components/docs-grid'
 import { getDefaultStaticProps } from '../../lib/utils'
 import ProjectHero from "../../components/project-hero";
-import { downloadUrl } from '../../lib/projectUtils'
+import { downloadUrl, fixMdLinks } from '../../lib/projectUtils'
 import ProjectLanding from '../../components/project-landing'
 import { BRAND_NAME } from '../../lib/constants'
 import Container from '../../components/container'
@@ -89,6 +89,7 @@ export async function getStaticProps({ params }: Params) {
   const project = getProjectConfig(projId);
   let md = getProjectIndexPage(projId) || '';
   md = stripTitleHeading(md);
+  md = fixMdLinks(md, project, `/${project.name.toLowerCase()}`);
   const content = await markdownToHtml(md);
 
   return {

@@ -19,8 +19,8 @@ const ProjectLanding = ({ content, project, theme }: {
 }) => {
     const name = project.name.toLowerCase();
     switch (name) {
-        case 'homecloud':
-            return <HomeCloudLanding theme={theme} project={project} />
+        // case 'homecloud':
+        //     return <HomeCloudLanding theme={theme} project={project} />
         default:
             return <Container><PostBody content={content} /></Container>
     }

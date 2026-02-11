@@ -69,7 +69,14 @@ export async function getStaticProps({ params }: Params) {
 
     const defaultText = `# ${toTitleCase(currentDoc?.title || projectId)} \n Select a topic from below to continue reading.`;
 
-    const content = await markdownToHtml((await fetchMd(currentDoc?.mdUrl)) || defaultText);
+    // For directory indexes (README-based), resolve relative links within the directory.
+    // For leaf pages, resolve relative links against the parent directory.
+    const isDirectoryIndex = currentDoc?.mdUrl?.toLowerCase().endsWith('readme.md');
+    const baseDocPath = isDirectoryIndex
+      ? currentDoc?.path
+      : currentDoc?.path?.substring(0, currentDoc.path.lastIndexOf('/'));
+
+    const content = await markdownToHtml((await fetchMd(currentDoc?.mdUrl, project, baseDocPath)) || defaultText);
 
     return {
       props: {

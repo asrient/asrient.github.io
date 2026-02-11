@@ -3,6 +3,7 @@ import { PROJECT_REPOS } from './constants';
 import ProjectConfigType from '../interfaces/projectConfig';
 import RouteItem from '../interfaces/routeItem';
 import path from 'path';
+import { fixMdLinks } from './projectUtils';
 
 /*
 Read project docs and config from local file system.
@@ -101,13 +102,14 @@ export function getRouteFromSlug(slug: string) {
   }
 }
 
-export async function fetchMd(url: string) {
+export async function fetchMd(url: string, project?: ProjectConfigType, currentDocPath?: string) {
   if (!url) {
     return null;
   }
   const res = await fetch(url);
   const text = await res.text();
-  return text;
+  const baseImageUrl = url.substring(0, url.lastIndexOf('/') + 1);
+  return fixMdLinks(text, project, currentDocPath, baseImageUrl);
 }
 
 export function stripTitleHeading(md: string) {
