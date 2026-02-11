@@ -1,7 +1,11 @@
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { Octokit } from 'octokit';
 import 'dotenv/config';
-import PROJECT_REPOS from '../config/projects.json' with { type: "json" };
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_REPOS = JSON.parse(fs.readFileSync(path.join(__dirname, '../config/projects.json'), 'utf-8'));
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 

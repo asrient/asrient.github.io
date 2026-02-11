@@ -1,9 +1,13 @@
 import { NotionToMarkdown } from 'notion-to-md';
 import { Client } from '@notionhq/client';
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import crypto from 'crypto';
 import 'dotenv/config';
-import SETTINGS from '../config/site.json' with { type: "json" };
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const SETTINGS = JSON.parse(fs.readFileSync(path.join(__dirname, '../config/site.json'), 'utf-8'));
 
 const notion = new Client({ auth: process.env.NOTION_TOKEN || '' });
 
