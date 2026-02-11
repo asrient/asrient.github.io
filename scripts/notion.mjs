@@ -3,7 +3,7 @@ import { Client } from '@notionhq/client';
 import fs from 'fs';
 import crypto from 'crypto';
 import 'dotenv/config';
-import SETTINGS from '../config/site.json';
+import SETTINGS from '../config/site.json' with { type: "json" };
 
 const notion = new Client({ auth: process.env.NOTION_TOKEN || '' });
 
@@ -13,9 +13,9 @@ const POSTS_DIR = './_posts';
 const IMAGES_DIR = './public/assets/blog/images';
 const IMG_BASE_PATH = '/assets/blog/images';
 
-const NOTION_SETTINGS: Record<string, any> = (SETTINGS as any).NOTION || {};
+const NOTION_SETTINGS = SETTINGS.NOTION || {};
 
-export function stringToSlug(str: string): string {
+export function stringToSlug(str) {
     return str
         .toLowerCase()
         .replace(/[^a-z0-9 -]/g, '')
@@ -23,18 +23,7 @@ export function stringToSlug(str: string): string {
         .replace(/-+/g, '-');
 }
 
-interface PageMeta {
-    id: string;
-    notionId: string;
-    title: string;
-    excerpt: string;
-    date: string;
-    tags: string[];
-    cover: string;
-    slug: string;
-}
-
-function pageMetadataToFrontMatter(page: PageMeta): string {
+function pageMetadataToFrontMatter(page) {
     const tags = page.tags.map((tag) => `- ${tag}`).join('\n');
     return `---
 title: ${page.title}
@@ -53,17 +42,17 @@ ogImage:
 `;
 }
 
-function sha1(data: string): string {
+function sha1(data) {
     return crypto.createHash('sha1').update(data).digest('hex');
 }
 
-async function downloadImage(url: string): Promise<string> {
+async function downloadImage(url) {
     const res = await fetch(url);
     if (!res.ok) {
         console.error(`Failed to fetch ${url}, status: ${res.status}`);
         return url;
     }
-    const filename = sha1(url).slice(0, 5) + '-' + url.split('/').pop()!.split('?')[0].split('#')[0];
+    const filename = sha1(url).slice(0, 5) + '-' + url.split('/').pop().split('?')[0].split('#')[0];
     const filepath = `${IMAGES_DIR}/${filename}`;
     const buffer = Buffer.from(await res.arrayBuffer());
     fs.writeFileSync(filepath, new Uint8Array(buffer));
@@ -71,8 +60,8 @@ async function downloadImage(url: string): Promise<string> {
     return `${IMG_BASE_PATH}/${filename}`;
 }
 
-async function fixMdLinks(md: string): Promise<string> {
-    const promises: Promise<string>[] = [];
+async function fixMdLinks(md) {
+    const promises = [];
     const reg = /\!\[(.*?)\]\((.*?)\)/g;
     md.replace(reg, (match, _p1, p2) => {
         promises.push(downloadImage(p2));
@@ -83,7 +72,7 @@ async function fixMdLinks(md: string): Promise<string> {
     return md.replace(reg, (_match, p1) => `![${p1}](${files.pop()})`);
 }
 
-async function savePage(page: PageMeta): Promise<void> {
+async function savePage(page) {
     const mdblocks = await n2m.pageToMarkdown(page.notionId);
     const mdString = n2m.toMarkdownString(mdblocks);
     const meta = pageMetadataToFrontMatter(page);
@@ -92,11 +81,11 @@ async function savePage(page: PageMeta): Promise<void> {
     fs.writeFileSync(`${POSTS_DIR}/${page.id}.md`, meta + '\n' + md);
 }
 
-async function getPagesFromDatabase(databaseId: string): Promise<PageMeta[]> {
-    const pages: PageMeta[] = [];
-    let cursor: string | undefined = undefined;
+async function getPagesFromDatabase(databaseId) {
+    const pages = [];
+    let cursor = undefined;
     while (true) {
-        const response: any = await notion.databases.query({
+        const response = await notion.databases.query({
             database_id: databaseId,
             start_cursor: cursor,
             filter: {
@@ -107,16 +96,16 @@ async function getPagesFromDatabase(databaseId: string): Promise<PageMeta[]> {
             },
         });
         await Promise.all(
-            response.results.map(async (page: any) => {
+            response.results.map(async (page) => {
                 const pageId = page.id.replace(/-/g, '');
                 try {
-                    const page_: PageMeta = {
+                    const page_ = {
                         id: pageId,
                         notionId: page.id,
                         title: page.properties.Page?.title[0].plain_text || pageId,
                         excerpt: page.properties.Intro?.rich_text[0]?.plain_text || '',
                         date: page.created_time,
-                        tags: page.properties.Tags.multi_select.map((tag: any) => tag.name),
+                        tags: page.properties.Tags.multi_select.map((tag) => tag.name),
                         cover: page.cover?.external?.url,
                         slug: '',
                     };
@@ -138,7 +127,7 @@ async function getPagesFromDatabase(databaseId: string): Promise<PageMeta[]> {
     return pages;
 }
 
-function cleanup(): void {
+function cleanup() {
     console.log('Cleaning up posts directory ====>');
     if (!fs.existsSync(POSTS_DIR)) {
         fs.mkdirSync(POSTS_DIR);
@@ -155,7 +144,7 @@ function cleanup(): void {
     fs.mkdirSync(IMAGES_DIR);
 }
 
-export default (): Promise<void> => {
+export default () => {
     return new Promise((resolve, reject) => {
         if (NOTION_SETTINGS.ENABLED !== true) {
             console.log('[Notion is disabled]');
@@ -172,10 +161,10 @@ export default (): Promise<void> => {
         }
         cleanup();
         console.log('Fetching pages from Notion ====>');
-        const tasks: Promise<void>[] = [];
+        const tasks = [];
         getPagesFromDatabase(NOTION_SETTINGS.DATABASE_ID).then((pages) => {
             console.log(`Found ${pages.length} published pages on Notion.`);
-            const slugs: string[] = [];
+            const slugs = [];
             pages.forEach((page) => {
                 slugs.push(page.slug);
                 tasks.push(savePage(page));

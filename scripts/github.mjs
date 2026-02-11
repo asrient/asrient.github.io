@@ -1,20 +1,20 @@
 import fs from 'fs';
 import { Octokit } from 'octokit';
 import 'dotenv/config';
-import PROJECT_REPOS from '../config/projects.json';
+import PROJECT_REPOS from '../config/projects.json' with { type: "json" };
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
 let updateProjectStr = process.env.UPDATE_PROJECT || '*';
 updateProjectStr = updateProjectStr.toLowerCase();
 
-const UPDATE_PROJECT: string[] = updateProjectStr === '*'
+const UPDATE_PROJECT = updateProjectStr === '*'
     ? PROJECT_REPOS
     : updateProjectStr.split(',').map((proj) => proj.trim());
 
 const PROJECTS_DIR = './_projects';
 
-function cleanup(removeToBeUpdated = false): void {
+function cleanup(removeToBeUpdated = false) {
     if (!fs.existsSync(PROJECTS_DIR)) {
         fs.mkdirSync(PROJECTS_DIR);
     }
@@ -31,17 +31,17 @@ function cleanup(removeToBeUpdated = false): void {
     });
 }
 
-function getProjDir(proj: string, full = true): string {
+function getProjDir(proj, full = true) {
     const parts = proj.split('/');
     const dir = `${parts[0]}-${parts[1]}`;
     return full ? `${PROJECTS_DIR}/${dir}` : dir;
 }
 
-function getRemoteFileLink(filePath: string, proj: string, branch = 'main'): string {
+function getRemoteFileLink(filePath, proj, branch = 'main') {
     return `https://raw.githubusercontent.com/${proj}/${branch}/${filePath}`;
 }
 
-async function downloadProjFile(filePath: string, proj: string, branch = 'main'): Promise<Response> {
+async function downloadProjFile(filePath, proj, branch = 'main') {
     const url = getRemoteFileLink(filePath, proj, branch);
     const res = await fetch(url);
     if (!res.ok) {
@@ -51,11 +51,11 @@ async function downloadProjFile(filePath: string, proj: string, branch = 'main')
     return res;
 }
 
-async function downloadProjTextFile(filePath: string, proj: string, branch = 'main'): Promise<string> {
+async function downloadProjTextFile(filePath, proj, branch = 'main') {
     return await (await downloadProjFile(filePath, proj, branch)).text();
 }
 
-async function downloadProjConfig(proj: string, branch: string): Promise<Record<string, any>> {
+async function downloadProjConfig(proj, branch) {
     return JSON.parse(await downloadProjTextFile('site.config.json', proj, branch));
 }
 
@@ -63,7 +63,7 @@ async function downloadProjConfig(proj: string, branch: string): Promise<Record<
 Download and save a project info & docs
 */
 
-function fixImageLinks(md: string, proj: string, branch: string): string {
+function fixImageLinks(md, proj, branch) {
     // replace image links that does not start with http with raw github links
     md = md.replace(/\!\[(.*?)\]\((?!http)(.*?)\)/g, (_match, p1, p2) => {
         return `![${p1}](${getRemoteFileLink(p2, proj, branch)})`;
@@ -71,35 +71,26 @@ function fixImageLinks(md: string, proj: string, branch: string): string {
     return md;
 }
 
-function stringToSlug(name: string): string {
+function stringToSlug(name) {
     return name.toLowerCase().replace(' ', '-');
 }
 
-interface DocsConfigNode {
-    title: string;
-    mdUrl: string | null;
-    path: string;
-    slugTitle: string;
-    githubUrl: string;
-    routes: DocsConfigNode[];
-}
-
-async function buildDocsConfig(proj: string, branch: string, docsPath: string | null): Promise<void> {
+async function buildDocsConfig(proj, branch, docsPath) {
     if (!docsPath) {
         return;
     }
     const docsFilePath = `${getProjDir(proj, true)}/docs.json`;
 
-    async function walk(proj: string, branch: string, pth: string, lev: number, basePath: string): Promise<DocsConfigNode | null> {
+    async function walk(proj, branch, pth, lev, basePath) {
         if (lev > 3) {
             console.warn(`[Warning] Max depth (3) reached for ${proj}, ${pth}`);
             return null;
         }
-        let title = pth.split('/').pop()!;
+        let title = pth.split('/').pop();
         if (title.endsWith('.md')) {
             title = title.replace('.md', '');
         }
-        const res: DocsConfigNode = {
+        const res = {
             title,
             mdUrl: null,
             path: stringToSlug(basePath),
@@ -116,7 +107,7 @@ async function buildDocsConfig(proj: string, branch: string, docsPath: string | 
             repo: proj.split('/')[1],
             path: pth,
         });
-        const tasks: Promise<void>[] = [];
+        const tasks = [];
         if (Array.isArray(data)) {
             data.forEach((file) => {
                 if (file.name.toLowerCase() === 'readme.md' && file.type === 'file') {
@@ -143,7 +134,7 @@ async function buildDocsConfig(proj: string, branch: string, docsPath: string | 
     fs.writeFileSync(docsFilePath, JSON.stringify(docsConfig, null, 2));
 }
 
-async function downloadProject(proj: string): Promise<void> {
+async function downloadProject(proj) {
     console.log(`[Updating.. -> ${proj}]`);
 
     if (!PROJECT_REPOS.includes(proj)) {
@@ -157,26 +148,26 @@ async function downloadProject(proj: string): Promise<void> {
     const repo = parts[1];
     const { data } = await octokit.rest.repos.get({ owner, repo });
 
-    let latestVersion: string | null = null;
+    let latestVersion = null;
 
     try {
         const { data: releaseData } = await octokit.rest.repos.getLatestRelease({ owner, repo });
         if (releaseData.tag_name) {
             latestVersion = releaseData.tag_name;
         }
-    } catch (e: any) {
+    } catch (e) {
         console.log('error message', e.message);
         console.warn(`No latest release found for ${proj}`);
     }
 
-    let configFile: Record<string, any> = {};
+    let configFile = {};
     try {
         configFile = await downloadProjConfig(proj, data.default_branch);
     } catch (e) {
         console.warn(`No site.config.json found for ${proj}, using default config..`, e);
     }
 
-    const projConfig: Record<string, any> = {
+    const projConfig = {
         title: data.name,
         tagline: data.description,
         description: data.description,
@@ -236,10 +227,10 @@ async function downloadProject(proj: string): Promise<void> {
  * Download all projects
  * Main function
  */
-export default (): Promise<void> => {
+export default () => {
     return new Promise((resolve) => {
         console.log('Fetching projects from GitHub ====>');
-        const tasks: Promise<void>[] = [];
+        const tasks = [];
         cleanup(true);
         UPDATE_PROJECT.forEach((proj) => {
             const task = downloadProject(proj);

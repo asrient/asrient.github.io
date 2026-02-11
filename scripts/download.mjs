@@ -1,5 +1,5 @@
-import githubToProjects from './github';
-import notionToBlogs from './notion';
+import githubToProjects from './github.mjs';
+import notionToBlogs from './notion.mjs';
 
 (() => {
     console.log('<===========Downloading Files==============>');

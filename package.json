@@ -6,7 +6,7 @@
     "start": "echo 'Use `npm run dev` for development, `npm run export` for static generation.' && exit 1",
     "demo": "cd out && python3 -m http.server 8000",
     "typecheck": "tsc",
-    "fetch": "ts-node --project scripts/tsconfig.json scripts/download.ts",
+    "fetch": "node scripts/download.mjs",
     "export": "npm run fetch && npm run build"
   },
   "dependencies": {
@@ -37,6 +37,7 @@
     "remark-gfm": "^3.0.1",
     "tailwindcss": "^3.3.2",
     "ts-node": "^10.9.1",
+    "tsx": "^4.21.0",
     "typescript": "^5.1.3"
   }
 }
