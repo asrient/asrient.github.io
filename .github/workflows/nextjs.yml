@@ -52,7 +52,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "18.13.0"
+          node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       # Disabling since image optimization is already configured in next.config.js
       # - name: Setup Pages
