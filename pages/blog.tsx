@@ -15,10 +15,10 @@ export default function Blog({ allPosts, theme }: Props) {
   return (
     <>
       <Head>
-        <title>{`Blog | ${BRAND_NAME}`}</title>
+        <title>{`Journal | ${BRAND_NAME}`}</title>
       </Head>
       <Container>
-        {allPosts.length > 0 ? <MoreStories title={NAME + "'s blog"} posts={allPosts} /> : <div>
+        {allPosts.length > 0 ? <MoreStories title={NAME + "'s journal"} posts={allPosts} /> : <div>
           <h1 className='text-center text-2xl pt-10'>Coming Soon</h1>
           </div>}
       </Container>

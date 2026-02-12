@@ -8,8 +8,6 @@ const CardSwitcher = ({ project }: {
   project: ProjectConfigType
 }) => {
   switch (project.name) {
-    case 'musicroom':
-      return <MusicroomCard project={project} />
     case 'HomeCloud':
       return <HomecloudCard project={project} />
     case 'homenet':

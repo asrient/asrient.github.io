@@ -125,7 +125,7 @@ const Header = ({ theme, project, docsConfig, style }: {
     url: '/projects'
   },
   {
-    name: 'Blog',
+    name: 'Journal',
     url: '/blog'
   }];
 

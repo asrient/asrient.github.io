@@ -17,7 +17,7 @@ export const HomenetCard = ({ project }: {
         </div>
         <div>
           <h1 className='text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#93D3DB] to-[#296FD8] w-min'>{project.title}</h1>
-          <p className='text-3xl md:text-4xl font-bold py-5 max-w-2xl text-neutral-100 text-brand'>{project.tagline}</p>
+          <p className='text-3xl md:text-4xl font-light py-5 max-w-2xl text-neutral-100 text-brand'>{project.tagline}</p>
           <Link href={`/${project.name.toLowerCase()}`} className='buttonPrimaryRound'>
             Learn more
           </Link>

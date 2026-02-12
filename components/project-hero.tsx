@@ -78,7 +78,7 @@ export default function ProjectHero({ project, theme }: Props) {
                             </div>
                         </div>
 
-                        <h1 className={thm`font-brand text-4xl md:text-5xl lg:text-[3.5rem] leading-tight font-bold text-left`}>
+                        <h1 className={thm`font-brand text-4xl md:text-5xl lg:text-[3.5rem] leading-tight font-light text-left`}>
                             {project.tagline}
                         </h1>
                         <Buttons project={project} theme={theme} />

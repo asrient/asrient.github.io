@@ -22,13 +22,11 @@ export default function Index({ allPosts, theme, projects }: Props) {
   return (
     <>
       <Head>
-        <title>{`${BRAND_NAME} | Personal Site`}</title>
+        <title>{`${BRAND_NAME}`}</title>
       </Head>
       <div className='dark'>
       <Header theme={theme} style={{ position: 'absolute', backgroundColor: 'transparent'}} />
       </div>
-      
-      <Intro theme={theme} />
       {projects.length > 0 && <ProjectShowcase projects={projects} theme={theme} />}
       <Container>
         {allPosts.length > 0 && <MoreStories title="Latest posts" posts={allPosts} />}

@@ -80,7 +80,7 @@ export const HomecloudCard = ({ project }: {
         top: parallexY,
       }}>
         <h1 className='text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r dark:from-[#ffb597] to-[#9E3F21] from-[#4E382F] dark:to-[#9E3F21] w-min'>{project.title}</h1>
-        <p className='text-3xl md:text-4xl font-bold py-7 md:max-w-3xl text-center text-neutral-900 dark:text-neutral-100 text-brand'>{project.tagline}</p>
+        <p className='text-3xl md:text-4xl font-light py-7 md:max-w-3xl text-center text-neutral-900 dark:text-neutral-100 text-brand'>{project.tagline}</p>
         <Link href={`/${project.name.toLowerCase()}`} className='buttonPrimaryRound'>
           Learn more
         </Link>

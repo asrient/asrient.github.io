@@ -68,6 +68,8 @@ Download and save a project info & docs
 */
 
 function fixImageLinks(md, proj, branch) {
+    // strip HTML tags from markdown
+    md = md.replace(/<[^>]+>/g, '');
     // replace image links that does not start with http with raw github links
     md = md.replace(/\!\[(.*?)\]\((?!http)(.*?)\)/g, (_match, p1, p2) => {
         return `![${p1}](${getRemoteFileLink(p2, proj, branch)})`;

@@ -1,6 +1,7 @@
 import type RouteItem from '../interfaces/routeItem'
 import { themed } from '../lib/utils'
 import Link from 'next/link'
+import SectionTitle from './section-title'
 
 type Props = {
   routes: RouteItem[],
@@ -15,9 +16,9 @@ const DocsGrid = ({ routes, theme, title }: Props) => {
   return (
     <section className='pt-12 mx-auto max-w-5xl'>
       <hr className='mb-10' />
-      <h2 className='h2'>
+      <SectionTitle>
         {title || 'Read next'}
-      </h2>
+      </SectionTitle>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-2 lg:gap-x-3 lg:gap-y-3">
         {routes.map((route) => (
           <Link href={route.path} key={route.path} className={thm`text-base font-light text-gray-900/60 dark:text-white/50 px-6 py-8 md:px-8 md:py-10 bg-white/40 dark:bg-neutral-700/40 hover:bg-neutral-500/10 dark:hover:bg-white/10 hover:border-transparent rounded-xl border-neutral-500/30 border border-solid`} >

@@ -21,17 +21,17 @@
 }
 
 .markdown h1 {
-  @apply mb-6 text-4xl font-extrabold tracking-tight;
+  @apply mb-6 text-3xl font-semibold tracking-tight;
 }
 
 .markdown h2 {
-  @apply mt-12 mb-4 text-3xl font-extrabold tracking-tight;
+  @apply mt-10 mb-4 text-2xl font-semibold tracking-tight;
 }
 .markdown h3 {
-  @apply mt-8 mb-3 text-2xl font-extrabold tracking-tight;
+  @apply mt-8 mb-3 text-xl font-medium tracking-tight;
 }
 .markdown h4 {
-  @apply mt-8 mb-3 text-xl font-extrabold tracking-tight;
+  @apply mt-6 mb-3 text-lg font-medium tracking-tight;
 }
 
 .markdown code {

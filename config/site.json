@@ -7,8 +7,7 @@
     "INTRO": "Cool stuff ahead...",
     "SOCIALS": {
         "GITHUB": "https://github.com/asrient",
-        "LINKEDIN": "https://www.linkedin.com/in/asrient/",
-        "TWITTER": "https://twitter.com/ooritroo"
+        "TWITTER": "https://twitter.com/asrientee"
     },
     "FOOTER_TEXT": "© 2023 Asrient.",
     "FOOTER_LINKS": [
@@ -17,7 +16,7 @@
             "LINK": "/archive/1"
         },
         {
-            "NAME": "Blog",
+            "NAME": "Journal",
             "LINK": "/blog"
         },
         {
@@ -27,7 +26,7 @@
     ],
     "NOTION": {
         "ENABLED": true,
-        "AUTHOR_DP": "/assets/blog/authors/asrient.jpeg",
+        "AUTHOR_DP": "/assets/blog/authors/asrient.png",
         "DATABASE_ID": "9083738af0d04455ba4696bbc3847ce2"
     }
 }

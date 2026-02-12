@@ -9,6 +9,9 @@ function slugifyPath(p: string): string {
 }
 
 export function fixMdLinks(md: string, project?: ProjectConfigType, currentDocPath?: string, baseImageUrl?: string): string {
+    // Strip HTML tags from markdown
+    md = md.replace(/<[^>]+>/g, '');
+
     const docsPath = project?.docsPath;
     const projectSlug = project?.name?.toLowerCase();
     const githubUrl = project?.githubUrl;
