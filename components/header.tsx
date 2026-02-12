@@ -167,7 +167,7 @@ const Header = ({ theme, project, docsConfig, style }: {
               )}>
               {isOpen ? <IconClose /> : <IconHamburger />}
             </button>}
-            <Link className='flex items-center text-black dark:text-white' href="/">
+            <Link className='flex items-center' href="/">
               <Image
                 src="/assets/icon/logo.svg"
                 width={30}
