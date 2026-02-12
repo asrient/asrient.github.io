@@ -182,7 +182,7 @@ const Header = ({ theme, project, docsConfig, style }: {
               <Link href={`/${project.name.toLowerCase()}`} className='ml-2'>{project.title}</Link>
             </>)}
           </div>
-          <div className="leading-tight text-neutral-700 dark:text-neutral-100 mt-auto mb-auto flex flex-row items-center">
+          <div className="leading-tight mt-auto mb-auto flex flex-row items-center">
             <Links links={links} />
             <DarkModeToggle />
           </div>
