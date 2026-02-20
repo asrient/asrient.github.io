@@ -5,7 +5,8 @@ import { Octokit } from 'octokit';
 import 'dotenv/config';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PROJECT_REPOS = JSON.parse(fs.readFileSync(path.join(__dirname, '../config/projects.json'), 'utf-8'));
+const PROJECT_REPOS_RAW = JSON.parse(fs.readFileSync(path.join(__dirname, '../config/projects.json'), 'utf-8'));
+const PROJECT_REPOS = PROJECT_REPOS_RAW.map((p) => typeof p === 'string' ? p : p.repo);
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
@@ -186,8 +187,11 @@ async function downloadProject(proj) {
         accentColor: 'orange',
         docsPath: 'docs',
         showDownloads: latestVersion !== null,
+        customDownloadPage: false,
+        customLanding: false,
         latestVersion,
         webAppUrl: null,
+        downloadLinks: {},
         ...configFile,
     };
 

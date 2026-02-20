@@ -144,7 +144,7 @@ const Header = ({ theme, project, docsConfig, style }: {
       links = [{
         name: 'Download',
         url: downloadUrl(project),
-        external: true,
+        external: !project.customDownloadPage,
       }, ...links];
     }
   }

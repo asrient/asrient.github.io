@@ -1,6 +1,5 @@
 import ProjectConfigType from "../interfaces/projectConfig"
 import PostBody from "./post-body";
-import HomeCloudLanding from "./homecloud/landing";
 import Container from "./container";
 
 /*
@@ -17,13 +16,8 @@ const ProjectLanding = ({ content, project, theme }: {
     project: ProjectConfigType,
     theme: string
 }) => {
-    const name = project.name.toLowerCase();
-    switch (name) {
-        // case 'homecloud':
-        //     return <HomeCloudLanding theme={theme} project={project} />
-        default:
-            return <Container><PostBody content={content} /></Container>
-    }
+    return <Container><PostBody content={content} /></Container>
+
 }
 
 export default ProjectLanding

@@ -1,6 +1,9 @@
 import ProjectConfigType from "../interfaces/projectConfig";
 
 export function downloadUrl(proj: ProjectConfigType) {
+    if (proj.customDownloadPage) {
+        return `/${proj.name.toLowerCase()}/download`;
+    }
     return `${proj.githubUrl}/releases/latest/`;
 }
 

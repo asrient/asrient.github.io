@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { PROJECT_REPOS } from './constants';
+import { PROJECT_REPOS, PROJECT_OVERRIDES } from './constants';
 import ProjectConfigType from '../interfaces/projectConfig';
 import RouteItem from '../interfaces/routeItem';
 import path from 'path';
@@ -30,7 +30,9 @@ export function getProjectConfig(proj: string): ProjectConfigType {
   if (!fs.existsSync(dir)) {
     throw new Error(`Project ${proj} does not exist in _projects directory. Please run \`npm run fetch\` to populate the directory.`);
   }
-  return JSON.parse(fs.readFileSync(`${dir}/config.json`, 'utf8'));
+  const config = JSON.parse(fs.readFileSync(`${dir}/config.json`, 'utf8'));
+  const overrides = PROJECT_OVERRIDES[proj] || {};
+  return { ...config, ...overrides };
 }
 
 export function getProjectConfigs(limit = 999): ProjectConfigType[] {

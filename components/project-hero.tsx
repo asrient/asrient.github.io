@@ -58,8 +58,8 @@ export default function ProjectHero({ project, theme }: Props) {
 
     return (
         <div className='px-3'>
-            <div className={thm`py-5 my-10 mx-auto max-w-8xl $bg-accent-1 dark:$bg-accent-1 border-2 border-white/10 rounded-md project-hero-texture relative z-10`}>
-                <div className='max-w-3xl mx-auto min-h-[40vh] md:min-h-[30rem] flex items-center'>
+            <div className={thm`py-5 my-6 mx-auto max-w-8xl $bg-accent-1 dark:$bg-accent-1 border-2 border-white/10 rounded-md project-hero-texture relative z-10`}>
+                <div className='max-w-3xl mx-auto min-h-[20vh] md:min-h-[15rem] flex items-center'>
                     <div className={thm`py-6 md:py-12 px-6 $text-accent-5 dark:$text-accent-5`}>
                         {
                             project.latestVersion && <div className={thm`mb-3 text-xs font-medium px-3 py-[0.3rem] rounded-full border $border-accent-4 dark:$border-accent-4 w-max`}>

@@ -2,19 +2,21 @@ import type RouteItem from '../interfaces/routeItem'
 import { themed } from '../lib/utils'
 import Link from 'next/link'
 import SectionTitle from './section-title'
+import cn from 'classnames';
 
 type Props = {
   routes: RouteItem[],
   theme: string,
   title?: string
+  className?: string
 }
 
-const DocsGrid = ({ routes, theme, title }: Props) => {
+const DocsGrid = ({ routes, theme, title, className }: Props) => {
 
   const thm = themed(theme);
 
   return (
-    <section className='pt-12 mx-auto max-w-5xl'>
+    <section className={cn('pt-12 mx-auto max-w-5xl', className)}>
       <hr className='mb-10' />
       <SectionTitle>
         {title || 'Read next'}

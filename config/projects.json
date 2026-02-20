@@ -1,5 +1,10 @@
 [
-    "asrient/HomeCloud",
+    {
+        "repo": "asrient/HomeCloud",
+        "customDownloadPage": true,
+        "showDownloads": true,
+        "customLanding": true
+    },
     "asrient/musicroom",
     "asrient/homenet",
     "asrient/backstage"

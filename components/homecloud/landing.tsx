@@ -1,461 +1,369 @@
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Container from "../container";
 import Link from "next/link";
 import ProjectConfigType from "../../interfaces/projectConfig";
+import { detectPlatform, UserPlatform } from "../../lib/utils";
+import { getBestCta, getOtherPlatforms, type HeroCta } from "../../lib/downloads";
 import { downloadUrl } from "../../lib/projectUtils";
 import cn from 'classnames';
 
 const fadeIn: Variants = {
-    hidden: {
-        opacity: 0,
-        y: 50,
-    },
+    hidden: { opacity: 0, y: 40 },
     visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 1,
-            delay: 0.3,
-        }
-    }
+        opacity: 1, y: 0,
+        transition: { duration: 0.8, delay: 0.15 },
+    },
 };
 
-const SectionCard = ({ children }: {
-    children: React.ReactNode
-}) => {
-    return (<section className="py-5 sm:py-10 mt-[1rem] px-6 md:px-8 lg:px-12 mx-2 flex flex-wrap justify-between items-center border-lite rounded-2xl bg-white/10 dark:bg-gray-900/10">
-        {children}
-    </section>)
-}
+const slideUp: Variants = {
+    hidden: { opacity: 0, y: 60 },
+    visible: {
+        opacity: 1, y: 0,
+        transition: { duration: 0.9, delay: 0.25 },
+    },
+};
 
-const SectionTitle = ({ children }: {
-    children: React.ReactNode
-}) => {
-    return (<h2 className="text-5xl sm:text-6xl font-semibold pb-2">
-        {children}
-    </h2>)
-}
+/* ─── Hero Device Parallax (small screens) ─── */
+const HeroDevicesParallax = () => {
+    const ref = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ['start end', 'end start'],
+    });
 
-const SectionText = ({ children }: {
-    children: React.ReactNode
-}) => {
-    return (<div className="text-xl dark:text-gray-200/70 text-gray-700/70 font-light">
-        {children}
-    </div>)
-}
+    const yPc = useTransform(scrollYProgress, [0, 0.5, 1], [0, 25, 25]);
+    const yMacbook = useTransform(scrollYProgress, [0, 0.5, 1], [0, -100, -100]);
+    const yIpad = useTransform(scrollYProgress, [0, 0.5, 1], [0, -220, -260]);
+    const yIphone = useTransform(scrollYProgress, [0, 0.5, 1], [0, -360, -380]);
 
-const Section1 = () => {
-    const zoomIn: Variants = {
-        hidden: {
-            top: '15rem',
-            scale: 2,
-            opacity: 0.2,
-        },
-        visible: {
-            top: '0rem',
-            scale: 1,
-            opacity: 1,
-            transition: {
-                duration: 1.2,
-                delay: 0.2,
-            }
-        }
-    };
-    return (<section className="py-10 px-3">
-        <motion.div
-            initial="hidden"
-            whileInView="visible"
-            variants={fadeIn}
-            className="mb-20 mx-auto max-w-3xl text-center"
-        >
-            <SectionTitle>
-                Introducing HomeCloud
-            </SectionTitle>
+    const scalePc = useTransform(scrollYProgress, [0, 0.5, 1], [1.1, 1, 1]);
+    const scaleMacbook = useTransform(scrollYProgress, [0, 0.5, 1], [1.25, 1, 1]);
+    const scaleIpad = useTransform(scrollYProgress, [0, 0.5, 1], [1.4, 1, 1]);
+    const scaleIphone = useTransform(scrollYProgress, [0, 0.5, 1], [1.55, 1, 1]);
 
-            <SectionText>
-                Homecloud is your personal digital content management app designed to streamline your digital life.
-                It enables you to manage files, photos, notes, and more across all your storage devices and services.
-                No more hassle of switching between different apps or sticking to a single storage provider.
-            </SectionText>
-        </motion.div>
-        <motion.div
-            className="relative bg-[url('/assets/img/homecloud/section1-sm.png')] md:bg-[url('/assets/img/homecloud/section1.png')] bg-contain bg-center bg-no-repeat w-full h-[40rem] max-h-[60vh] max-w-[60vw] mx-auto"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={zoomIn}
-        >
-        </motion.div>
-    </section>)
-}
-
-const Section2 = () => {
-    const icons = [
-        "g-drive.svg",
-        "dropbox.svg",
-        "webdav.png",
-        "nextcloud.svg",
-    ]
-    const popOut: Variants = {
-        hidden: {
-            opacity: 0.5,
-            scale: 0.7,
-            y: 100,
-        },
-        visible: {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            transition: {
-                duration: 1,
-                delay: 0.2,
-                type: 'spring',
-            }
-        }
-    };
-    return (<SectionCard>
-        <div className="max-w-2xl mx-auto">
-            <SectionTitle>
-                Google Drive, Dropbox, Nextcloud, WebDAV and more.
-            </SectionTitle>
-            <SectionText>
-                Store your data where it makes sense for you.
-                You can keep your important files on Google Drive, your photos archive on an external hard drive and so on. And yet, still enjoy the same awesome experience.
-            </SectionText>
-            <div className="flex items-center pt-8 px-3 space-x-3">
-                {icons.map((icon, i) => <Image src={`/assets/img/homecloud/${icon}`} key={icon} className="rounded-2xl w-16 h-16 bg-white" width={50} height={50} alt='app' />)
-                }
-            </div>
-        </div>
-        <div className="mx-auto">
+    return (
+        <div ref={ref} className="w-full md:hidden flex flex-col items-center mt-8 -mb-[82%]">
+            {/* PC - largest, full width */}
             <motion.div
-                variants={popOut}
-                initial="hidden"
-                whileInView="visible"
+                style={{ y: yPc, scale: scalePc }}
+                className="w-[90%] z-[1]"
             >
-                <Image src='/assets/img/homecloud/section2.png' className="w-[20rem] max-w-[90vw] h-auto" width={0} height={0} alt='app' />
+                <Image
+                    src="/assets/img/homecloud/hero-frames/pc.png"
+                    width={800} height={600}
+                    alt="Desktop"
+                    className="w-full h-auto drop-shadow-2xl"
+                />
+            </motion.div>
+            {/* MacBook - overlaps PC, centered */}
+            <motion.div
+                style={{ y: yMacbook, scale: scaleMacbook }}
+                className="w-[86%] z-[2] -mt-[10%]"
+            >
+                <Image
+                    src="/assets/img/homecloud/hero-frames/macbook.png"
+                    width={800} height={600}
+                    alt="MacBook"
+                    className="w-full h-auto drop-shadow-2xl"
+                />
+            </motion.div>
+            {/* iPad - overlaps MacBook, centered */}
+            <motion.div
+                style={{ y: yIpad, scale: scaleIpad }}
+                className="w-[60%] z-[3] mt-[8%]"
+            >
+                <Image
+                    src="/assets/img/homecloud/hero-frames/ipad.png"
+                    width={800} height={600}
+                    alt="iPad"
+                    className="w-full h-auto drop-shadow-2xl"
+                />
+            </motion.div>
+            {/* iPhone - smallest, overlaps iPad, centered */}
+            <motion.div
+                style={{ y: yIphone, scale: scaleIphone }}
+                className="w-[30%] z-[4] mt-[10%] self-center"
+            >
+                <Image
+                    src="/assets/img/homecloud/hero-frames/iphone.png"
+                    width={800} height={600}
+                    alt="iPhone"
+                    className="w-full h-auto drop-shadow-2xl"
+                />
             </motion.div>
         </div>
-    </SectionCard>)
-}
+    );
+};
 
-const Section3 = () => {
+/* ─── Logo ─── */
+/* ─── Hero subtext builder ─── */
+function getHeroSubtext(project: ProjectConfigType, platform: UserPlatform): React.ReactNode {
+    const dl = project.downloadLinks || {};
+    const downloadPageUrl = downloadUrl(project);
+    const others = getOtherPlatforms(dl, platform.os);
 
-    return (<SectionCard>
-        <div className="mx-auto">
-            <Image src='/assets/img/homecloud/section3.png' className="w-[14rem] my-5 max-w-[80vw] h-auto" width={0} height={0} alt='app' />
-        </div>
-        <div className="max-w-2xl mx-auto">
-            <SectionTitle>
-                Photos. Notes. Not just files.
-            </SectionTitle>
-            <SectionText>
-                Organize your photos, notes from across storages in one place.
-                Photos are automatically organized by date and location. And the Notes app let's you organize your notes in a hierarchical structure.
-            </SectionText>
-        </div>
-    </SectionCard>)
-}
-
-const Section4 = () => {
-    const colorChange: Variants = {
-        hidden: {
-            color: '#FFA500',
-        },
-        visible: {
-            color: '#3cbb0e',
-            transition: {
-                duration: 1,
-                delay: 1,
-                type: 'spring',
-            }
-        }
-    };
-    const commonTransition = {
-        duration: 1,
-        delay: 0.9,
-        type: 'spring',
-    };
-    const visibleToHidden: Variants = {
-        hidden: {
-            opacity: 1,
-            transition: commonTransition,
-        },
-        visible: {
-            opacity: 0,
-            transition: commonTransition,
-        }
-    };
-    return (<SectionCard>
-        <div className="max-w-4xl py-16 sm:py-20 mx-auto">
-            <SectionTitle>
-                <motion.div className="mb-2 mx-1 w-10 h-10 relative"
-                    variants={colorChange}
-                    initial="hidden"
-                    whileInView="visible"
-                >
-                    <motion.div
-                        variants={visibleToHidden}
-                        className="absolute top-0 left-0 w-full h-full"
-                        initial="hidden"
-                        whileInView="visible"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10">
-                            <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clipRule="evenodd" />
-                        </svg>
-                    </motion.div>
-                    <motion.div
-                        variants={visibleToHidden}
-                        initial="visible"
-                        whileInView="hidden"
-                        className="absolute top-0 left-0 w-full h-full"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10">
-                            <path d="M18 1.5c2.9 0 5.25 2.35 5.25 5.25v3.75a.75.75 0 01-1.5 0V6.75a3.75 3.75 0 10-7.5 0v3a3 3 0 013 3v6.75a3 3 0 01-3 3H3.75a3 3 0 01-3-3v-6.75a3 3 0 013-3h9v-3c0-2.9 2.35-5.25 5.25-5.25z" />
-                        </svg>
-                    </motion.div>
-                </motion.div>
-                Free your data from vendor lock-in.
-            </SectionTitle>
-            <SectionText>
-                <motion.div variants={fadeIn}
-                    initial="hidden"
-                    whileInView="visible"
-                >
-                    Store your data where it makes sense for you, maintaining ownership and control over your files and content.
-                    Seamlessly switch between various storage providers without limitations or commitments.
-                </motion.div>
-            </SectionText>
-        </div>
-    </SectionCard>)
-}
-
-const Section5 = () => {
-
-    return (<SectionCard>
-        <div className="mx-auto">
-            <Image src='/assets/img/homecloud/section5.png' className="w-[14rem] my-5 max-w-[80vw] h-auto" width={0} height={0} alt='app' />
-        </div>
-        <div className="max-w-2xl mx-auto">
-            <SectionTitle>
-                Upload from any device. Access everywhere.
-            </SectionTitle>
-            <SectionText>
-                Back up your photos from your phone, work on them on your computer. As long as you have access to your storage, you can access your content. Even without HomeCloud app.
-            </SectionText>
-        </div>
-    </SectionCard>)
-}
-
-const Section6 = () => {
-
-    return (<SectionCard>
-        <div className="mx-auto">
-            <Image src='/assets/img/homecloud/section6.png' className="w-[14rem] my-5 max-w-[80vw] h-auto" width={0} height={0} alt='app' />
-        </div>
-        <div className="max-w-2xl mx-auto">
-            <SectionTitle>
-                No Sign-ups Required.
-            </SectionTitle>
-            <SectionText>
-                HomeCloud does not rely on any centralized service to work. All your data stays on your existing storage spaces.
-                That means no signups, no subscriptions, no usage limits.
-                Made possible by a unique syncing algorithm that works without any central database.
-            </SectionText>
-        </div>
-    </SectionCard>)
-}
-
-const SelectButton = ({ selected, name, onClick }: {
-    selected: boolean,
-    name: string,
-    onClick: () => void,
-}) => {
-    return (<button className={`min-w-[4rem] px-3 py-2 rounded-lg ${selected ? 'dark:bg-slate-100/50 dark:text-gray-900 text-gray-100 bg-slate-800/50' : 'hover:bg-slate-500/10'}`} onClick={onClick}>
-        {name}
-    </button>)
-}
-
-const AppsSection = () => {
-    const [selected, setSelected] = useState('photos');
-    const select = (name: string) => {
-        setSelected(name);
+    if (others.length > 0) {
+        // Format as "x, y and z"
+        const formatted = others.length > 1
+            ? others.slice(0, -1).join(', ') + ' and ' + others[others.length - 1]
+            : others[0];
+        return (
+            <Link href={downloadPageUrl} className="underline hover:text-neutral-700 dark:hover:text-neutral-300">
+                Also available for {formatted}.
+            </Link>
+        );
     }
-    const appIcon = (name: string) => {
-        return `/assets/img/homecloud/${name}.png`;
-    }
-    return (<section className="mt-10 py-6">
-        <Container className="max-w-5xl">
-            <div className="mb-10 p-1 bg-slate-500/20 flex space-x-2 w-fit rounded-lg text-sm">
-                <SelectButton selected={selected === 'photos'} name='Photos' onClick={() => select('photos')} />
-                <SelectButton selected={selected === 'notes'} name='Notes' onClick={() => select('notes')} />
-                <SelectButton selected={selected === 'files'} name='Files' onClick={() => select('files')} />
-            </div>
-            <SectionTitle>
-                <Image src={appIcon(selected)} className="w-16 h-16" width={0} height={0} alt='app' />
-                {selected === 'photos' && 'Photos'}
-                {selected === 'notes' && 'Notes'}
-                {selected === 'files' && 'Files'}
-            </SectionTitle>
-            <div className="min-h-[6rem]">
-                <SectionText>
-                    {selected === 'photos' && `HomeCloud automatically organizes your photos by date and location.
-                You can view them by creation date, date added or by their storage location.
-                You can also add tags to your photos to organize them better.`}
-                    {selected === 'notes' && `HomeCloud's Notes app let's you organize your notes in a hierarchical structure.
-                Notes are stored in HTML format, so you can easily export them or view them in a browser.`}
-                    {selected === 'files' && `HomeCloud's Files app let's you manage your files across all your storage devices and services and
-                move files between them seemlessly. You can also pin folders to your favorites for quick access.`}
-                </SectionText>
-            </div>
 
-        </Container>
-
-        <motion.div
-            initial="hidden"
-            whileInView="visible"
-            variants={fadeIn}
-            style={{ backgroundImage: `url('/assets/img/homecloud/${selected}-screen.png')` }}
-            className="md:mx-3 my-3 h-[30rem] md:h-[40rem] lg:h-[50rem] w-full bg-cover md:bg-contain bg-no-repeat bg-left md:bg-center">
-        </motion.div>
-    </section>)
-}
-
-const DownloadCard = ({ name, description, url, color, buttonText }: {
-    name: string,
-    description: string,
-    url: string,
-    color?: 'blue' | 'purple',
-    buttonText?: string,
-}) => {
-    let className = '';
-    switch (color) {
-        case 'blue':
-            className = 'bg-blue-200/60 dark:bg-blue-900/60';
-            break;
-        case 'purple':
-            className = 'bg-purple-200/60 dark:bg-purple-900/60';
-            break;
-        default:
-            className = 'dark:bg-zinc-800 bg-zinc-100/60';
-            break;
-    }
-    return (<div className={cn("px-8 py-8 border-lite rounded-md flex flex-col items-center md:items-baseline", className)}>
-        <h3 className="text-2xl font-semibold">
-            {name}
-        </h3>
-        <div className="text-sm opacity-60 font-light">
-            {description}
-        </div>
-        <Link href={url} className="buttonPrimaryRound mt-8">
-            {buttonText || 'Download'}
+    return (
+        <Link href={downloadPageUrl} className="underline hover:text-neutral-700 dark:hover:text-neutral-300">
+            See all downloads
         </Link>
-    </div>)
+    );
 }
 
-const CtaSection = ({ project }: {
-    project: ProjectConfigType,
-}) => {
-    const downloadLink = downloadUrl(project);
+/* ─── Hero Section ─── */
+const HeroSection = ({ project }: { project: ProjectConfigType }) => {
+    const [platform, setPlatform] = useState<UserPlatform>({ os: 'unknown', isMobile: false, arch: 'unknown' });
 
-    return (<Container className="py-10 px-3">
-        <div className="max-w-5xl mx-auto">
-            <SectionTitle>
-                Available in many forms and sizes.
-            </SectionTitle>
-            <SectionText>
-                Choose the version that best suits your needs.
-            </SectionText>
-            <div className="mt-10 grid grid-cols-1 md:grid-cols-2 space-y-2 md:space-y-0 md:space-x-3">
-                <DownloadCard name="HomeCloud Desktop"
-                    description="For Windows, Linux and macOS."
-                    color="blue"
-                    url={downloadLink} />
-                <DownloadCard name="HomeCloud Server"
-                    color="purple"
-                    description="For self-hosted web version."
-                    buttonText="Setup Guide"
-                    url='/homecloud/docs/help/self-hosting/installation' />
-            </div>
-            <div className="mt-2 md:mt-3 py-8 px-6 border-lite rounded-md dark:bg-zinc-900/10 bg-zinc-100/10">
-                <h3 className="flex flex-col items-center">
-                    <div className="text-2xl font-semibold">
-                        Try out HomeCloud in your browser.
-                    </div>
-                    <div className="text-sm opacity-60">
-                        You can just use our public instance which runs HomeCloud Server version for free.
-                    </div>
-                    <Link href={project.webAppUrl || '/'} className="buttonPrimaryRound mt-8">
-                        Open
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="ml-1 w-4 h-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-                        </svg>
-                    </Link>
-                </h3>
-            </div>
-        </div>
-    </Container>)
-}
+    useEffect(() => {
+        setPlatform(detectPlatform());
+    }, []);
 
-const HomeCloudLanding = ({ theme, project }: {
-    theme: string,
-    project: ProjectConfigType,
-}) => {
-    const { scrollYProgress } = useScroll();
+    const cta = getBestCta(project.downloadLinks || {}, platform, downloadUrl(project));
+    const subtext = getHeroSubtext(project, platform);
 
-    const opacity = useTransform(
-        scrollYProgress,
-        [0, 0.2, 0.35, 0.5, 0.8, 0.9, 1],
-        [0.2, 0.7, 0.6, 0.8, 0.7, 0.5, 0],
+    return (
+        <section className="pt-16 pb-10 text-center">
+            <motion.div initial="hidden" animate="visible" variants={fadeIn}>
+                <div className="flex flex-col items-center justify-center gap-3 mb-6">
+                    {project.iconPath && <Image src={project.iconPath} width={56} height={56} alt={project.name} className="w-20 h-20" />}
+                    <span className="text-2xl font-medium tracking-tight">{project.name}</span>
+                </div>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-normal leading-tight max-w-3xl mx-auto px-6">
+                    Make your devices work better together, for you.
+                </h1>
+                <div className="mt-8 flex justify-center">
+                    {cta.type === 'store' ? (
+                        <Link href={cta.url} target="_blank" rel="noopener noreferrer" className="inline-block hover:opacity-80 transition-opacity">
+                            <Image src={cta.icon} width={0} height={0} sizes="100vw" alt={cta.alt} className="h-[44px] w-auto" />
+                        </Link>
+                    ) : (
+                        <Link href={cta.url}
+                            className="inline-block px-6 py-3 rounded-full bg-red-500 hover:bg-red-600 text-white font-medium text-sm transition-colors">
+                            {cta.label}
+                        </Link>
+                    )}
+                </div>
+                <p className="mt-4 mx-4 text-sm text-neutral-500 dark:text-neutral-400">
+                    {subtext}
+                </p>
+            </motion.div>
+
+            {/* Hero image placeholder */}
+            <motion.div
+                initial="hidden" whileInView="visible" viewport={{ once: true }}
+                variants={slideUp}
+                className="mt-12 mx-auto w-full md:h-[30rem] lg:h-[45rem] overflow-hidden"
+            >
+                <Image
+                    src="/assets/img/homecloud/hero1.png"
+                    width={1200} height={800}
+                    alt="HomeCloud hero"
+                    className="w-full h-full object-contain hidden md:block"
+                />
+            </motion.div>
+            <HeroDevicesParallax />
+        </section>
     );
+};
 
-    const y1 = useTransform(
-        scrollYProgress,
-        [0, 0.2, 0.5, 0.65, 1],
-        ['30rem', '26rem', '19rem', '20rem', '5rem',],
-    );
+/* ─── Superpowered Section ─── */
+const SuperpoweredSection = () => (
+    <section className="py-10 md:py-36 md:min-h-[30vh] flex items-center px-4">
+        <Container className="max-w-6xl">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal leading-snug">
+                    When you connect your devices together, they get{' '}
+                    <span className="text-green-500">Superpowered</span>.
+                    And you unlock experiences that are{' '}
+                    <span className="text-red-500">Magical</span>,{' '}
+                    <span className="text-blue-500">Powerful</span>, and{' '}
+                    <span className="text-purple-500">Fun</span>.
+                </h2>
+            </motion.div>
+        </Container>
+    </section>
+);
 
-    const y2 = useTransform(
-        scrollYProgress,
-        [0, 0.3, 0.5, 0.7, 1],
-        ['25rem', '30rem', '20rem', '0rem', '16rem',],
-    );
+/* ─── Feature Card ─── */
+type FeatureCardProps = {
+    title: string;
+    description: string;
+    image?: string;
+    smallImage?: string;
+};
 
-    const x1 = useTransform(
-        scrollYProgress,
-        [0, 0.3, 0.5, 0.8, 1],
-        ['0%', '40%', '50%', '28%', '80%',],
-    );
+const FeatureCard = ({ title, description, image, smallImage }: FeatureCardProps) => {
 
-    const x2 = useTransform(
-        scrollYProgress,
-        [0, 0.4, 0.5, 0.6, 1],
-        ['80%', '10%', '50%', '0%', '40%'],
-    );
-
-    return (<div>
-        <motion.div style={{ opacity, y: y1, x: x1 }}
-            className='fixed z-0 top-[2rem] left-[5%] md:left-[25%] h-[10rem] w-[20rem] dark:bg-orange-600/50 bg-orange-400/70 blur-3xl'>
-        </motion.div>
+    return (
         <motion.div
-            style={{ opacity, y: y2, x: x2 }}
-            className='fixed z-0 top-[5rem] left-[0%] md:left-[30%] h-[10rem] w-[28rem] dark:bg-blue-600/40 bg-blue-400/50 blur-3xl'>
-        </motion.div>
-        <div className='relative z-10'>
-            <Section1 />
-            <Section2 />
-            <div className='lg:grid grid-cols-2 flex flex-col'>
-                <Section3 />
-                <Section4 />
-                <Section5 />
-                <Section6 />
+            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+            variants={fadeIn}
+            className={cn("rounded-xl overflow-hidden flex flex-col", 'md:border border-neutral-200 dark:border-neutral-700')}
+        >
+            <div className="w-full p-4 md:p-14 flex flex-col justify-center">
+                <h3 className="text-3xl sm:text-4xl md:text-5xl font-normal leading-snug mb-3">{title}</h3>
+                <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">{description}</p>
             </div>
-            <AppsSection />
-            <CtaSection project={project} />
-        </div>
-    </div>)
-}
+            <div className="w-full flex items-center justify-center p-0 md:p-6">
+                {image ? (
+                    <>
+                        <Image src={image} width={1200} height={800} alt={title} className="w-full h-auto rounded-xl hidden md:block" />
+                        <Image src={smallImage || image} width={600} height={400} alt={title} className="w-full h-auto rounded-xl md:hidden" />
+                    </>
+                ) : (
+                    <div className="w-full h-[20rem] md:h-[28rem] rounded-xl bg-white/40 dark:bg-black/10 flex items-center justify-center text-neutral-400 dark:text-neutral-500 text-sm">
+                        Screenshot Placeholder
+                    </div>
+                )}
+            </div>
+        </motion.div>
+    );
+};
 
-export default HomeCloudLanding
+const FeaturesSection = () => (
+    <section className="py-8 px-0 md:px-4">
+        <Container className="max-w-7xl space-y-6">
+            <FeatureCard
+                title="Transfer a file, photo or link. Or thousands of them."
+                description="Send files, photos, links and more between your devices instantly. No cables, no cloud uploads. Just fast & direct transfers with no size limits."
+                image="/assets/img/homecloud/transfer-files.png"
+                smallImage="/assets/img/homecloud/transfer-files-sm.png"
+            />
+            <FeatureCard
+                title="Browse and edit your files & photos on the bigger screen, or on the go."
+                description="Access your phone's photos right from your computer or your computer's files from your phone. View, edit or organize them from any device. You can even save changes made remotely on desktop without downloading and copying them."
+                image="/assets/img/homecloud/browse.png"
+                smallImage="/assets/img/homecloud/browse-sm.png"
+            />
+            <FeatureCard
+                title="Copy on one device, paste on another."
+                description="Access your clipboard across all your devices. Copy text or links on one device and paste them on another seamlessly."
+                image="/assets/img/homecloud/clipboard.png"
+                smallImage="/assets/img/homecloud/clipboard-sm.png"
+            />
+            <FeatureCard
+                title="Change that song, or turn up the volume. From your nearest device."
+                description="Control your desktop's media playback from your phone. Skip tracks, adjust volume or pause playback from whichever device is closest to you."
+                image="/assets/img/homecloud/media-control.png"
+                smallImage="/assets/img/homecloud/media-control-sm.png"
+            />
+        </Container>
+    </section>
+);
+
+/* ─── Trust / Security Section ─── */
+type TrustCardProps = {
+    title: string;
+    description: string;
+    icon: React.ReactNode;
+};
+
+const TrustCard = ({ title, description, icon }: TrustCardProps) => (
+    <div className={cn("rounded-xl p-6 flex flex-col gap-2",
+        'bg-zinc-100 dark:bg-zinc-700/40',
+        //'border border-neutral-200 dark:border-neutral-700'
+    )}>
+        <div className="w-12 h-12 m-4">{icon}</div>
+        <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            <span className="text-neutral-900 dark:text-neutral-200 font-semibold">{title}. </span>
+            {description}
+        </p>
+    </div>
+);
+
+const TrustSection = () => (
+    <section className="py-16 md:py-24 px-4">
+        <Container className="max-w-7xl">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-10">
+                    Secure, Safe and Connected.
+                </h2>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <TrustCard
+                        title="Stay connected anywhere"
+                        description="Whether you are at home near your devices or on a vacation, HomeCloud keeps you connected with unique networking that works both with or without internet."
+                        icon={
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
+                            </svg>
+                        }
+                    />
+                    <TrustCard
+                        title="Your privacy is never optional"
+                        description="With HomeCloud your data never leaves your devices. All connections are always direct and end-to-end encrypted."
+                        icon={
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
+                        }
+                    />
+                    <TrustCard
+                        title="Free and open-sourced"
+                        description="No purchases or subscriptions. HomeCloud is free to use without any restrictions. Open sourced on GitHub for everyone to contribute or audit."
+                        icon={
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                            </svg>
+                        }
+                    />
+                </div>
+            </motion.div>
+        </Container>
+    </section>
+);
+
+import HCDownload from './hc-download';
+import ProjectResources from '../project-resources';
+
+/* ─── Download / CTA Section ─── */
+const CtaSection = ({ project }: { project: ProjectConfigType }) => {
+    return (
+        <section className="py-16 md:pt-24 px-4">
+            <Container className="max-w-7xl">
+                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
+                    <HCDownload project={project} title="Let's get you started" />
+                </motion.div>
+            </Container>
+        </section>
+    );
+};
+
+const ResourcesSection = ({ project, theme }: { project: ProjectConfigType, theme: string }) => {
+    return (
+        <section className="pb-16">
+            <ProjectResources className="max-w-7xl" project={project} theme={theme} />
+        </section>
+    );
+};
+
+/* ─── Main Landing Component ─── */
+const HomeCloudLanding = ({ theme, project }: {
+    theme: string;
+    project: ProjectConfigType;
+}) => {
+    return (
+        <div>
+            <HeroSection project={project} />
+            <SuperpoweredSection />
+            <FeaturesSection />
+            <TrustSection />
+            <CtaSection project={project} />
+            <ResourcesSection project={project} theme={theme} />
+        </div>
+    );
+};
+
+export default HomeCloudLanding;
