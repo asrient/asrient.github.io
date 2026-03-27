@@ -12,6 +12,7 @@ export type StoreEntry = { label?: string; url: string; icon: string };
 export type DesktopData = Record<DesktopPlatform, {
     store?: StoreEntry;
     assets: DownloadEntry[];
+    note?: string;
 }>;
 
 /* ─── Store badge constants ─── */
@@ -26,10 +27,11 @@ export const storeBadges = {
 /* ─── Build structured download data from config ─── */
 
 export function getDownloadData(dl: DownloadLinks) {
+    const notes = dl.downloadNotes || {};
     const desktop: DesktopData = {
-        macOS: { assets: [] },
-        Windows: { assets: [] },
-        Linux: { assets: [] },
+        macOS: { assets: [], note: notes.macos },
+        Windows: { assets: [], note: notes.windows },
+        Linux: { assets: [], note: notes.linux },
     };
     const mobile: StoreEntry[] = [];
 
@@ -68,7 +70,7 @@ export function getDownloadData(dl: DownloadLinks) {
     const hasDesktop = desktopPlatforms.some(p => desktop[p].store || desktop[p].assets.length > 0);
     const hasMobile = mobile.length > 0;
 
-    return { desktop, mobile, hasDesktop, hasMobile };
+    return { desktop, mobile, hasDesktop, hasMobile, mobileNote: notes.mobile };
 }
 
 /* ─── Pick best CTA for a given platform ─── */

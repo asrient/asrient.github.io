@@ -35,7 +35,7 @@ const HCDownload = ({ project, title }: { project: ProjectConfigType; title: str
     const [desktopTab, setDesktopTab] = useState<DesktopPlatform>('macOS');
     const [mobileFirst, setMobileFirst] = useState(false);
     const [userArch, setUserArch] = useState<'arm64' | 'x64' | 'unknown'>('unknown');
-    const { desktop, mobile, hasDesktop, hasMobile } = useMemo(() => getDownloadData(project.downloadLinks || {}), [project]);
+    const { desktop, mobile, hasDesktop, hasMobile, mobileNote } = useMemo(() => getDownloadData(project.downloadLinks || {}), [project]);
     const currentDesktop = desktop[desktopTab];
 
     useEffect(() => {
@@ -99,6 +99,9 @@ const HCDownload = ({ project, title }: { project: ProjectConfigType; title: str
                     <p className="text-sm text-neutral-500 dark:text-neutral-400">Coming soon</p>
                 )}
             </div>
+            {currentDesktop.note && (
+                <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">{currentDesktop.note}</p>
+            )}
         </div>
     );
 
@@ -115,6 +118,9 @@ const HCDownload = ({ project, title }: { project: ProjectConfigType; title: str
                     />
                 ))}
             </div>
+            {mobileNote && (
+                <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">{mobileNote}</p>
+            )}
         </div>
     );
 
@@ -124,7 +130,7 @@ const HCDownload = ({ project, title }: { project: ProjectConfigType; title: str
 
     return (
         <div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-3">
+            <h2 className="text-3xl sm:text-3xl md:text-4xl font-normal mb-3">
                 {title}
             </h2>
             <p className="text-base text-neutral-600 dark:text-neutral-400 max-w-4xl leading-relaxed mb-10">

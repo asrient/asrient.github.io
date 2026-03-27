@@ -8,6 +8,12 @@ export type DownloadLinks = {
     macosX64?: string,
     windowsExe?: string,
     linuxDeb?: string,
+    downloadNotes?: {
+        macos?: string,
+        windows?: string,
+        linux?: string,
+        mobile?: string,
+    },
 }
 
 type ProjectConfigType = {

@@ -142,7 +142,7 @@ const HeroSection = ({ project }: { project: ProjectConfigType }) => {
                     <span className="text-2xl font-medium tracking-tight">{project.name}</span>
                 </div>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-normal leading-tight max-w-3xl mx-auto px-6">
-                    Make your devices work better together, for you.
+                    Stay connected to all your devices.
                 </h1>
                 <div className="mt-8 flex justify-center">
                     {cta.type === 'store' ? (
@@ -179,24 +179,6 @@ const HeroSection = ({ project }: { project: ProjectConfigType }) => {
     );
 };
 
-/* ─── Superpowered Section ─── */
-const SuperpoweredSection = () => (
-    <section className="py-10 md:py-36 md:min-h-[30vh] flex items-center px-4">
-        <Container className="max-w-6xl">
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal leading-snug">
-                    When you connect your devices together, they get{' '}
-                    <span className="text-green-500">Superpowered</span>.
-                    And you unlock experiences that are{' '}
-                    <span className="text-red-500">Magical</span>,{' '}
-                    <span className="text-blue-500">Powerful</span>, and{' '}
-                    <span className="text-purple-500">Fun</span>.
-                </h2>
-            </motion.div>
-        </Container>
-    </section>
-);
-
 /* ─── Feature Card ─── */
 type FeatureCardProps = {
     title: string;
@@ -211,17 +193,17 @@ const FeatureCard = ({ title, description, image, smallImage }: FeatureCardProps
         <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
             variants={fadeIn}
-            className={cn("rounded-xl overflow-hidden flex flex-col", 'md:border border-neutral-200 dark:border-neutral-700')}
+            className={cn("flex flex-col", 'py-10 md:py-5')}
         >
-            <div className="w-full p-4 md:p-14 flex flex-col justify-center">
-                <h3 className="text-3xl sm:text-4xl md:text-5xl font-normal leading-snug mb-3">{title}</h3>
+            <div className="w-full md:p-14 flex flex-col justify-center mb-2 md:mb-0">
+                <h3 className="text-3xl sm:text-3xl md:text-4xl font-normal leading-snug mb-3">{title}</h3>
                 <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">{description}</p>
             </div>
             <div className="w-full flex items-center justify-center p-0 md:p-6">
                 {image ? (
                     <>
-                        <Image src={image} width={1200} height={800} alt={title} className="w-full h-auto rounded-xl hidden md:block" />
-                        <Image src={smallImage || image} width={600} height={400} alt={title} className="w-full h-auto rounded-xl md:hidden" />
+                        <Image src={image} width={1200} height={800} alt={title} className="w-full h-auto hidden md:block" />
+                        <Image src={smallImage || image} width={600} height={400} alt={title} className="w-full h-auto md:hidden" />
                     </>
                 ) : (
                     <div className="w-full h-[20rem] md:h-[28rem] rounded-xl bg-white/40 dark:bg-black/10 flex items-center justify-center text-neutral-400 dark:text-neutral-500 text-sm">
@@ -238,7 +220,7 @@ const FeaturesSection = () => (
         <Container className="max-w-7xl space-y-6">
             <FeatureCard
                 title="Transfer a file, photo or link. Or thousands of them."
-                description="Send files, photos, links and more between your devices instantly. No cables, no cloud uploads. Just fast & direct transfers with no size limits."
+                description="Send files, photos, links and more between your devices instantly. No cables, no cloud uploads. Get fast and direct transfers with no size limits."
                 image="/assets/img/homecloud/transfer-files.png"
                 smallImage="/assets/img/homecloud/transfer-files-sm.png"
             />
@@ -288,7 +270,7 @@ const TrustSection = () => (
     <section className="py-16 md:py-24 px-4">
         <Container className="max-w-7xl">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-10">
+                <h2 className="text-3xl sm:text-3xl md:text-4xl font-normal mb-10">
                     Secure, Safe and Connected.
                 </h2>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -357,7 +339,6 @@ const HomeCloudLanding = ({ theme, project }: {
     return (
         <div>
             <HeroSection project={project} />
-            <SuperpoweredSection />
             <FeaturesSection />
             <TrustSection />
             <CtaSection project={project} />
